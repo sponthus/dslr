@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import Typing as tp
+import typing as tp
 
 
 DATA_PATH = "datasets/dataset_train.csv"
@@ -13,14 +13,14 @@ def get_data(path: str) -> pd.DataFrame:
     return data
 
 
-def ft_count(data: pd.Series[float]) -> int:
+def ft_count(data: pd.Series) -> int:
     count: int = 0
     for _ in data:
         count += 1
     return count
 
 
-def ft_mean(data: pd.Series[float], count: int) -> float:
+def ft_mean(data: pd.Series, count: int) -> float:
     mean: float = float("NaN")
     total: int = 0
 
@@ -32,7 +32,7 @@ def ft_mean(data: pd.Series[float], count: int) -> float:
     return mean
 
 
-def ft_deviation(data: pd.Series[float], mean: float, count: int) -> tuple:
+def ft_deviation(data: pd.Series, mean: float, count: int) -> tuple:
     variance: float = (
         sum((x - mean) ** 2 for x in data)
         / count
@@ -49,8 +49,8 @@ class Percentiles(tp.NamedTuple):
     max: float
 
 
-def ft_percentiles(data: pd.Series[float], count: int) -> Percentiles:
-    sorted_data: pd.Series[float] = data.sort()
+def ft_percentiles(data: pd.Series, count: int) -> Percentiles:
+    sorted_data: np.ndarray = np.sort(data)
 
     min: float = sorted_data[0]
     max: float = sorted_data[-1]
@@ -80,26 +80,33 @@ def describe(data: pd.DataFrame):
         col_data: pd.Series[float] = data[col].dropna()
         count = ft_count(col_data)
         mean = ft_mean(col_data, count)
-        percentiles: Percentiles = ft_percentiles(col_data)
-        variance, std = ft_deviation(data, mean, count)
+        percentiles: Percentiles = ft_percentiles(col_data, count)
+        variance, std = ft_deviation(col_data, mean, count)
         statistics.append({
+            "Name": col,
             "Count": count,
             "Mean": mean,
             "Std": std,
+            "Variance": variance,
             "Min": percentiles.min,
             "25%": percentiles.quartile_25,
             "50%": percentiles.quartile_50,
             "75%": percentiles.quartile_75,
-            "Max": percentiles.max
+            "Max": percentiles.max,
+            "Amplitude": percentiles.max - percentiles.min
         })
-        # TODO Supp: Variance ? amplitude
+        # TODO Supp: amplitude
+    statistics_df = pd.DataFrame(statistics)
+    statistics_df = statistics_df.set_index("Name")
+    statistics_df = statistics_df.T
+    print(statistics_df)
 
 
 
 def main():
     # TODO: Add ArgParser to fill path + Parsing
     data: pd.DataFrame = get_data(DATA_PATH)
-    print(data.head)
+    describe(data)
 
 
 if __name__ == "__main__":
