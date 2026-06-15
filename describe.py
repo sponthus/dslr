@@ -6,16 +6,6 @@ from parsing import parse_describe_args
 import argparse
 
 
-DATA_PATH = "datasets/dataset_train.csv"
-
-
-def get_data(path: str) -> pd.DataFrame:
-    # TODO: Eventually add separator detection
-    data: pd.DataFrame = pd.read_csv(path, sep=",")
-    data.set_index("Index")
-    return data
-
-
 def ft_count(data: pd.Series) -> int:
     count: int = 0
     for _ in data:
@@ -24,6 +14,7 @@ def ft_count(data: pd.Series) -> int:
 
 
 def ft_mean(data: pd.Series, count: int) -> float:
+    assert count != 0, "count can not be null"
     mean: float = float("NaN")
     total: int = 0
 
@@ -36,6 +27,7 @@ def ft_mean(data: pd.Series, count: int) -> float:
 
 
 def ft_deviation(data: pd.Series, mean: float, count: int) -> tuple:
+    assert count != 0, "count can not be null"
     variance: float = (
         sum((x - mean) ** 2 for x in data)
         / count
@@ -59,22 +51,23 @@ def ft_percentiles(data: pd.Series, count: int) -> Percentiles:
     max: float = sorted_data[-1]
 
     if count % 2 == 0:
-        quartile_25=float(sorted_data[round(count * 1 / 4) - 1])
-        quartile_50=float(sorted_data[round(count * 1 / 2) - 1])
-        quartile_75=float(sorted_data[round(count * 3 / 4) - 1])
+        quartile_25 = float(sorted_data[round(count * 1 / 4) - 1])
+        quartile_50 = float(sorted_data[round(count * 1 / 2) - 1])
+        quartile_75 = float(sorted_data[round(count * 3 / 4) - 1])
     else:
-        quartile_25=float(sorted_data[round((count + 1) * 1 / 4) - 1])
-        quartile_50=float(sorted_data[round((count + 1) * 1 / 4) - 1])
-        quartile_75=float(sorted_data[round((count + 1) * 1 / 4) - 1])
+        quartile_25 = float(sorted_data[round((count + 1) * 1 / 4) - 1])
+        quartile_50 = float(sorted_data[round((count + 1) * 1 / 4) - 1])
+        quartile_75 = float(sorted_data[round((count + 1) * 1 / 4) - 1])
 
     percentiles = Percentiles(
         min=min,
-        quartile_25=quartile_25, 
-        quartile_50=quartile_50, 
+        quartile_25=quartile_25,
+        quartile_50=quartile_50,
         quartile_75=quartile_75,
         max=max
     )
     return percentiles
+
 
 def describe(data: pd.DataFrame):
     numeric_col = [col for col in data.columns if data[col].dtype == float]
@@ -82,6 +75,9 @@ def describe(data: pd.DataFrame):
     for col in numeric_col:
         col_data: pd.Series[float] = data[col].dropna()
         count = ft_count(col_data)
+        # Column full of NaN
+        if count == 0:
+            continue
         mean = ft_mean(col_data, count)
         percentiles: Percentiles = ft_percentiles(col_data, count)
         variance, std = ft_deviation(col_data, mean, count)
@@ -98,31 +94,27 @@ def describe(data: pd.DataFrame):
             "Max": percentiles.max,
             "Amplitude": percentiles.max - percentiles.min
         })
-        # TODO Supp: amplitude
     statistics_df = pd.DataFrame(statistics)
     statistics_df = statistics_df.set_index("Name")
     statistics_df = statistics_df.T
     print(statistics_df)
 
 
-
 def main():
     try:
         args: argparse.Namespace = parse_describe_args()
-
-    except argparse.ArgumentError as e:
-        print(f"Argument parsing error: {e}")
+    except Exception as e:
+        print(f"Unexpected error: parse_describe_args(): {e}")
         sys.exit(1)
-    except argparse.ArgumentTypeError as e:
-        print(f"Argument type error: {e}")
+
+    try:
+        describe(args.dataset)
+    except AssertionError as e:
+        print(e)
         sys.exit(1)
     except Exception as e:
-        print(f"Unexpected error: prediction_parse_args(): {e}")
+        print(f"Unexpected error: describe(): {e}")
         sys.exit(1)
-
-    # TODO: Add ArgParser to fill path + Parsing
-    data: pd.DataFrame = get_data(args.dataset)
-    describe(data)
 
 
 if __name__ == "__main__":
