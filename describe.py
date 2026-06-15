@@ -77,7 +77,7 @@ def describe(data: pd.DataFrame):
     numeric_col = [col for col in data.columns if data[col].dtype == float]
     statistics = []
     for col in numeric_col:
-        col_data: pd.Series[float] = data[col]
+        col_data: pd.Series[float] = data[col].dropna()
         count = ft_count(col_data)
         mean = ft_mean(col_data, count)
         percentiles: Percentiles = ft_percentiles(col_data)
