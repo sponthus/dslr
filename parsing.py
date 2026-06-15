@@ -1,11 +1,14 @@
 import argparse
+import pandas as pd
 from pathlib import Path
 
 
-class ValidateFile(argparse.Action):
+class ValidateCsv(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         if not values.is_file():
             parser.error(f"The file {values} does not exist.")
+
+        data = pd.read_csv(values)
         setattr(namespace, self.dest, values)
 
 
@@ -17,7 +20,7 @@ def parse_describe_args() -> argparse.Namespace:
         '--dataset',
         type=Path,
         required=True,
-        action=ValidateFile,
+        action=ValidateCsv,
         help='The dataset to be visualised'
     )
 

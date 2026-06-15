@@ -1,6 +1,9 @@
+import sys
 import numpy as np
 import pandas as pd
 import typing as tp
+from parsing import parse_describe_args
+import argparse
 
 
 DATA_PATH = "datasets/dataset_train.csv"
@@ -104,8 +107,21 @@ def describe(data: pd.DataFrame):
 
 
 def main():
+    try:
+        args: argparse.Namespace = parse_describe_args()
+
+    except argparse.ArgumentError as e:
+        print(f"Argument parsing error: {e}")
+        sys.exit(1)
+    except argparse.ArgumentTypeError as e:
+        print(f"Argument type error: {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"Unexpected error: prediction_parse_args(): {e}")
+        sys.exit(1)
+
     # TODO: Add ArgParser to fill path + Parsing
-    data: pd.DataFrame = get_data(DATA_PATH)
+    data: pd.DataFrame = get_data(args.dataset)
     describe(data)
 
 
