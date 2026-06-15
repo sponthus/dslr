@@ -21,33 +21,57 @@ def ft_count(data: pd.Series[float]) -> int:
 
 
 def ft_mean(data: pd.Series[float], count: int) -> float:
-    # TODO: Calculate me
-    mean = 0
+    mean: float = float("NaN")
+    total: int = 0
+
+    for item in data:
+        total += item
+
+    mean = total / count
+
     return mean
 
 
-def ft_boundaries(data: pd.Series[float], count: int):
-    # TODO: Calculate me
-    min, max = 0, 0
-    return min, max
+def ft_deviation(data: pd.Series[float], mean: float, count: int) -> tuple:
+    variance: float = (
+        sum((x - mean) ** 2 for x in data)
+        / count
+    )
+    std: float = variance ** 0.5
+    return variance, std
 
 
-def ft_std(data: pd.Series[float], mean: float, count: int):
-    # TODO Somme ecarts moyenne / n
-    std: float = 0
-    return std
-
-
-class Quartiles(tp.NamedTuple):
+class Percentiles(tp.NamedTuple):
+    min: float
     quartile_25: float
     quartile_50: float
     quartile_75: float
+    max: float
 
 
-def ft_quartiles(data: pd.Series[float]) -> dict:
-    quartiles = Quartiles(quartile_25=25, quartile_50=23, quartile_75=50)
-    # TODO: Calculate me
-    return quartiles
+def ft_percentiles(data: pd.Series[float], count: int) -> Percentiles:
+    sorted_data: pd.Series[float] = data.sort()
+
+    min: float = sorted_data[0]
+    max: float = sorted_data[-1]
+
+    if count % 2 == 0:
+        quartile_25=float(sorted_data[round(count * 1 / 4) - 1])
+        quartile_50=float(sorted_data[round(count * 1 / 2) - 1])
+        quartile_75=float(sorted_data[round(count * 3 / 4) - 1])
+    else:
+        quartile_25=float(sorted_data[round((count + 1) * 1 / 4) - 1])
+        quartile_50=float(sorted_data[round((count + 1) * 1 / 4) - 1])
+        quartile_75=float(sorted_data[round((count + 1) * 1 / 4) - 1])
+
+    percentiles = Percentiles(
+        min=min,
+        quartile_25=quartile_25, 
+        quartile_50=quartile_50, 
+        quartile_75=quartile_75,
+        max=max
+    )
+    return percentiles
 
 def describe(data: pd.DataFrame):
     numeric_col = [col for col in data.columns if data[col].dtype == float]
@@ -56,19 +80,19 @@ def describe(data: pd.DataFrame):
         col_data: pd.Series[float] = data[col]
         count = ft_count(col_data)
         mean = ft_mean(col_data, count)
-        min, max = ft_boundaries(col_data, count)
-        quartiles = ft_quartiles(col_data)
+        percentiles: Percentiles = ft_percentiles(col_data)
+        variance, std = ft_deviation(data, mean, count)
         statistics.append({
             "Count": count,
             "Mean": mean,
-            "Std": ft_std(col_data, mean, count),
-            "Min": min,
-            "25%": quartiles[0],
-            "50%": quartiles[1],
-            "75%": quartiles[2],
-            "Max": max
+            "Std": std,
+            "Min": percentiles.min,
+            "25%": percentiles.quartile_25,
+            "50%": percentiles.quartile_50,
+            "75%": percentiles.quartile_75,
+            "Max": percentiles.max
         })
-        # TODO Supp: Variance ? mediane, amplitude
+        # TODO Supp: Variance ? amplitude
 
 
 
