@@ -1,0 +1,72 @@
+import pandas as pd
+from pathlib import Path
+import matplotlib.pyplot as plt
+
+
+def get_data(path: Path) -> pd.DataFrame:
+    data: pd.DataFrame = pd.read_csv(path, sep=",")
+    if "Index" in data.columns:
+        data = data.set_index("Index")
+    return data
+
+
+data = get_data(path="datasets/dataset_train.csv")
+numeric_col = [col for col in data.columns if data[col].dtype == float]
+
+
+COLORS_HOUSES = {
+    "Slytherin": (0, 1, 0), 
+    "Gryffindor": (1, 0, 0), 
+    "Ravenclaw": (0, 0, 1), 
+    "Hufflepuff": (1, 1, 0)
+}
+
+
+chosen_cols = numeric_col
+# chosen_cols = ["Astronomy", "Herbology", "Divination", "Muggle Studies", "Ancient Runes", "History of Magic",  "Transfiguration", "Charms"]
+# Red = "History of Magic", "Transfiguration"
+# chosen_cols = ["Muggle Studies", 
+#                "History of Magic", "Transfiguration",
+#                "Divination",
+#                "Astronomy", "Herbology"
+#                ]
+
+
+nb = len(chosen_cols)
+fig = plt.figure(figsize=(nb * 3, nb * 2))
+
+i = 1
+plt.suptitle("Features pair plot", size=50)
+for b, col_b in enumerate(chosen_cols):
+    for a, col_a in enumerate(chosen_cols):
+        plt.subplot(nb, nb, i)
+        i += 1
+
+        if col_a == col_b:
+            for house, color in COLORS_HOUSES.items():
+                color_w_transparency = (*color, 0.5)
+                plt.hist(
+                    label=house,
+                    x=data[data["Hogwarts House"] == house][col_a],
+                    fc=color_w_transparency
+                )
+
+        else:
+            for house, color in COLORS_HOUSES.items():
+                color_w_transparency = *color, 0.5
+                filtered_data = data[data["Hogwarts House"] == house]
+                plt.scatter(
+                    label=house,
+                    x=filtered_data[col_a],
+                    y=filtered_data[col_b],
+                    fc=color_w_transparency,
+                    s=4
+                )
+        if a == 0:
+            plt.ylabel(col_b)
+        if b == nb - 1:
+            plt.xlabel(col_a)
+
+plt.tight_layout(rect=[0, 0, 1, 0.98])
+plt.legend()
+plt.show()
