@@ -33,3 +33,17 @@ def parse_describe_args() -> argparse.Namespace:
     )
 
     return parser.parse_args()
+
+
+def parse_pair_plot_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="A simple program to visualise dataset's basic statistic"
+    )
+    parser.add_argument(
+        "dataset",
+        type=Path,
+        action=ValidateCsv,
+        help="The dataset to be visualised"
+    )
+
+    return parser.parse_args()
