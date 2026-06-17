@@ -57,22 +57,22 @@ class LogregTrain() :
     def save_weights(self):
         pass
 
-    def log_loss(self, y, sigmoid) -> float :
+    def log_loss(self, y: np.ndarray, sigmoid: np.ndarray) -> float :
         """Loss function or log loss, calculates the cost"""
         res: float = -(y * np.log(sigmoid) + (1 - y) * np.log(1 - sigmoid)).mean()
         return res
     
-    def derivative(self, x, y, sigmoid) -> float:
+    def derivative(self, x: np.ndarray, y: np.ndarray, sigmoid: np.ndarray) -> float:
         """Derivative from log loss function, for gradient descent"""
         res: float = ((sigmoid - y) * x).mean()
         return res
 
-    def sigmoid(self, x: float) -> float:
+    def sigmoid(self, x: np.ndarray) -> np.ndarray:
         """Sigmoid function, turns any value to 0-1"""
-        res: float = 1 / (1 + np.exp(-x))
+        res: np.ndarray = 1 / (1 + np.exp(-x))
         return res
     
-    def update(self, to_update, gradient, learning_rate: float):
+    def update(self, to_update: np.ndarray, gradient: float, learning_rate: float):
         """Updates weights or bias with gradient modulated by learning_rate"""
         return to_update - (gradient * learning_rate)
 
