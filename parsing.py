@@ -7,6 +7,10 @@ class ValidateCsv(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         if not values.is_file():
             parser.error(f"The file {values} does not exist.")
+
+        if values.suffix != ".csv":
+            parser.error(f"ValueError: The file '{values}' is not a .csv file")
+
         try:
             data = self.get_data(values)
             setattr(namespace, self.dest, data)
