@@ -85,15 +85,22 @@ class LogregTrain():
         return to_update - (gradient * learning_rate)
 
 
-data: pd.DataFrame = get_data("datasets/dataset_train.csv")
-chosen_cols = ["Muggle Studies",
-               "History of Magic", "Transfiguration",
-               "Divination",
-               "Astronomy", "Herbology",
-               ]
-class_col = "Hogwarts House"
-all_cols = chosen_cols + [class_col]
-data = data[all_cols]
-data = data.dropna(axis=0)
-print(data)
-test = LogregTrain(data, class_col, chosen_cols)
+def main():
+    data: pd.DataFrame = get_data("datasets/dataset_train.csv")
+    chosen_cols = [
+        "Muggle Studies",
+        "History of Magic", "Transfiguration",
+        "Divination",
+        "Astronomy", "Herbology"
+        ]
+    class_col = "Hogwarts House"
+    all_cols = chosen_cols + [class_col]
+    data = data[all_cols]
+    data = data.dropna(axis=0)
+    print(data)
+    test = LogregTrain(data, class_col, chosen_cols)
+    test.train(2, 0.01)
+
+
+if __name__ == "__main__":
+    main()
