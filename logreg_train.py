@@ -71,6 +71,10 @@ class LogregTrain() :
         """Sigmoid function, turns any value to 0-1"""
         res: float = 1 / (1 + np.exp(-x))
         return res
+    
+    def update(self, to_update, gradient, learning_rate: float):
+        """Updates weights or bias with gradient modulated by learning_rate"""
+        return to_update - (gradient * learning_rate)
 
 data: pd.DataFrame = get_data("datasets/dataset_train.csv")
 chosen_cols = ["Muggle Studies", 
