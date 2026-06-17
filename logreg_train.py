@@ -58,7 +58,7 @@ class LogregTrain() :
         pass
 
     def log_loss(self, y: np.ndarray, sigmoid: np.ndarray) -> float :
-        """Loss function or log loss, calculates the cost"""
+        """Loss function or log loss, for visualization"""
         res: float = -(y * np.log(sigmoid) + (1 - y) * np.log(1 - sigmoid)).mean()
         return res
     
