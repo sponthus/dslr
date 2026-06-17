@@ -1,6 +1,6 @@
 import argparse
-import pandas as pd
 from pathlib import Path
+from utils import get_data
 
 
 class ValidateCsv(argparse.Action):
@@ -12,17 +12,10 @@ class ValidateCsv(argparse.Action):
             parser.error(f"ValueError: The file '{values}' is not a .csv file")
 
         try:
-            data = self.get_data(values)
+            data = get_data(values)
             setattr(namespace, self.dest, data)
         except Exception:
             parser.error(f"Unable to read {values} as a pd.DataFrame")
-
-    def get_data(self, path: Path) -> pd.DataFrame:
-        # TODO: Eventually add separator detection
-        data: pd.DataFrame = pd.read_csv(path, sep=",")
-        if "Index" in data.columns:
-            data = data.set_index("Index")
-        return data
 
 
 def parse_describe_args() -> argparse.Namespace:
