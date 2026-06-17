@@ -1,27 +1,26 @@
 import numpy as np
 import pandas as pd
-from pathlib import Path
-
-def get_data(path: Path) -> pd.DataFrame:
-    data: pd.DataFrame = pd.read_csv(path, sep=",")
-    if "Index" in data.columns:
-        data = data.set_index("Index")
-    return data
+from utils import get_data
 
 
-class LogregTrain() :
+class LogregTrain():
 
-    def __init__(self, training_data: pd.DataFrame, class_col: str, factor_col: list[str]):
+    def __init__(
+            self,
+            training_data: pd.DataFrame,
+            class_col: str,
+            factor_col: list[str]
+            ):
         for col in factor_col:
             if col not in training_data.columns:
                 raise AssertionError("")
         if class_col not in training_data.columns:
             raise AssertionError("")
-        
+
         self.classes = training_data[class_col].unique()
         self.nb_classes = len(self.classes)
         self.nb_factors = len(factor_col)
-        self.enum = { 
+        self.enum = {
             name: i for i, name in enumerate(self.classes)
         }
 
@@ -45,8 +44,6 @@ class LogregTrain() :
         # Or np.random ?
         self.weights = np.full((self.nb_factors, self.nb_classes), 0)
         # print(self.weights)
-        
-
 
     def train(self, nb_cycles: int, alpha: float):
         for cycle in range(nb_cycles):
@@ -57,12 +54,18 @@ class LogregTrain() :
     def save_weights(self):
         pass
 
-    def log_loss(self, y: np.ndarray, sigmoid: np.ndarray) -> float :
+    def log_loss(self, y: np.ndarray, sigmoid: np.ndarray) -> float:
         """Loss function or log loss, for visualization"""
-        res: float = -(y * np.log(sigmoid) + (1 - y) * np.log(1 - sigmoid)).mean()
+        res: float = -(y * np.log(sigmoid)
+                       + (1 - y) * np.log(1 - sigmoid)).mean()
         return res
-    
-    def derivative(self, x: np.ndarray, y: np.ndarray, sigmoid: np.ndarray) -> float:
+
+    def derivative(
+            self,
+            x: np.ndarray,
+            y: np.ndarray,
+            sigmoid: np.ndarray
+            ) -> float:
         """Derivative from log loss function, for gradient descent"""
         res: float = ((sigmoid - y) * x).mean()
         return res
@@ -71,13 +74,19 @@ class LogregTrain() :
         """Sigmoid function, turns any value to 0-1"""
         res: np.ndarray = 1 / (1 + np.exp(-x))
         return res
-    
-    def update(self, to_update: np.ndarray, gradient: float, learning_rate: float):
+
+    def update(
+            self,
+            to_update: np.ndarray,
+            gradient: float,
+            learning_rate: float
+            ) -> np.ndarray:
         """Updates weights or bias with gradient modulated by learning_rate"""
         return to_update - (gradient * learning_rate)
 
+
 data: pd.DataFrame = get_data("datasets/dataset_train.csv")
-chosen_cols = ["Muggle Studies", 
+chosen_cols = ["Muggle Studies",
                "History of Magic", "Transfiguration",
                "Divination",
                "Astronomy", "Herbology",

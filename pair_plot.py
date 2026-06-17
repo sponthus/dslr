@@ -1,13 +1,5 @@
-import pandas as pd
-from pathlib import Path
 import matplotlib.pyplot as plt
-
-
-def get_data(path: Path) -> pd.DataFrame:
-    data: pd.DataFrame = pd.read_csv(path, sep=",")
-    if "Index" in data.columns:
-        data = data.set_index("Index")
-    return data
+from utils import get_data
 
 
 data = get_data(path="datasets/dataset_train.csv")
@@ -15,17 +7,26 @@ numeric_col = [col for col in data.columns if data[col].dtype == float]
 
 
 COLORS_HOUSES = {
-    "Slytherin": (0, 1, 0), 
-    "Gryffindor": (1, 0, 0), 
-    "Ravenclaw": (0, 0, 1), 
+    "Slytherin": (0, 1, 0),
+    "Gryffindor": (1, 0, 0),
+    "Ravenclaw": (0, 0, 1),
     "Hufflepuff": (1, 1, 0)
 }
 
 
 chosen_cols = numeric_col
-# chosen_cols = ["Astronomy", "Herbology", "Divination", "Muggle Studies", "Ancient Runes", "History of Magic",  "Transfiguration", "Charms"]
+# chosen_cols = [
+#     "Astronomy",
+#     "Herbology",
+#     "Divination",
+#     "Muggle Studies",
+#     "Ancient Runes",
+#     "History of Magic",
+#      "Transfiguration",
+#     "Charms"
+#     ]
 # Red = "History of Magic", "Transfiguration"
-# chosen_cols = ["Muggle Studies", 
+# chosen_cols = ["Muggle Studies",
 #                "History of Magic", "Transfiguration",
 #                "Divination",
 #                "Astronomy", "Herbology"
