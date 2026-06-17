@@ -7,7 +7,7 @@ def find_separator(file: Path) -> str:
     """Find the separator used in a CSV file."""
     sniffer = csv.Sniffer()
     with open(file) as f:
-        separator: str = sniffer.sniff(f.read(500)).delimiter
+        separator: str = sniffer.sniff(f.read(5000)).delimiter
 
     return separator
 
