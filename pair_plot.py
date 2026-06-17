@@ -34,7 +34,7 @@ def pair_plot(data: pd.DataFrame) -> None:
     numeric_col = [col for col in data.columns if data[col].dtype == float]
     chosen_cols = numeric_col
     nb = len(chosen_cols)
-    plt.figure(figsize=(nb * 3, nb * 2))
+    plt.figure(figsize=(nb * 3, nb * 2), num="Pair Plot")
 
     i = 1
     plt.suptitle("Features pair plot", size=50)

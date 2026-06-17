@@ -16,8 +16,8 @@ COLORS_HOUSES = {
 def histogram(data: pd.DataFrame) -> None:
     numeric_col = [col for col in data.columns if data[col].dtype == float]
 
-    plt.figure()
     for col in numeric_col:
+        plt.figure(num="Histogram")
         for house, color in COLORS_HOUSES.items():
             color_w_transparency = (*color, 0.5)
             plt.hist(
