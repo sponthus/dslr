@@ -1,6 +1,8 @@
+import sys
 import numpy as np
 import pandas as pd
-from utils import get_data
+import argparse
+from parsing import parse_logreg_train_args
 
 
 class LogregTrain():
@@ -85,8 +87,7 @@ class LogregTrain():
         return to_update - (gradient * learning_rate)
 
 
-def main():
-    data: pd.DataFrame = get_data("datasets/dataset_train.csv")
+def logreg_train(data: pd.DataFrame) -> None:
     chosen_cols = [
         "Muggle Studies",
         "History of Magic", "Transfiguration",
@@ -100,6 +101,23 @@ def main():
     print(data)
     test = LogregTrain(data, class_col, chosen_cols)
     test.train(2, 0.01)
+
+
+def main():
+    try:
+        args: argparse.Namespace = parse_logreg_train_args()
+    except Exception as e:
+        print(f"Unexpected error: parse_describe_args(): {e}")
+        sys.exit(1)
+
+    try:
+        logreg_train(args.dataset)
+    except AssertionError as e:
+        print(e)
+        sys.exit(1)
+    except Exception as e:
+        print(f"Unexpected error: describe(): {e}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
