@@ -14,6 +14,8 @@ COLORS_HOUSES = {
 
 
 def histogram(data: pd.DataFrame) -> None:
+    """Plot histograms for each numeric column in the dataset,
+    grouped by Hogwarts House."""
     numeric_col = [col for col in data.columns if data[col].dtype == float]
 
     for col in numeric_col:

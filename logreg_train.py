@@ -13,6 +13,7 @@ class LogregTrain():
             class_col: str,
             factor_col: list[str]
             ):
+        """Initialize the logistic regression training class"""
         for col in factor_col:
             if col not in training_data.columns:
                 raise AssertionError("")
@@ -48,12 +49,14 @@ class LogregTrain():
         # print(self.weights)
 
     def train(self, nb_cycles: int, alpha: float):
+        """Train the model with gradient descent"""
         for cycle in range(nb_cycles):
 
             pass
         pass
 
     def save_weights(self):
+        """Save weights to a file"""
         pass
 
     def log_loss(self, y: np.ndarray, sigmoid: np.ndarray) -> float:

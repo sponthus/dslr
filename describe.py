@@ -7,6 +7,7 @@ import argparse
 
 
 def ft_count(data: pd.Series) -> int:
+    """Count the number of rows in a pandas Series"""
     count: int = 0
     for _ in data:
         count += 1
@@ -14,6 +15,7 @@ def ft_count(data: pd.Series) -> int:
 
 
 def ft_mean(data: pd.Series, count: int) -> float:
+    """Calculate the mean of a pandas Series"""
     assert count != 0, "count can not be null"
     mean: float = float("NaN")
     total: int = 0
@@ -27,6 +29,7 @@ def ft_mean(data: pd.Series, count: int) -> float:
 
 
 def ft_deviation(data: pd.Series, mean: float, count: int) -> tuple:
+    """Calculate the variance and standard deviation of a pandas Series"""
     assert count != 0, "count can not be null"
     variance: float = (
         sum((x - mean) ** 2 for x in data)
@@ -37,6 +40,7 @@ def ft_deviation(data: pd.Series, mean: float, count: int) -> tuple:
 
 
 class Percentiles(tp.NamedTuple):
+    """A named tuple to hold the percentiles of a dataset"""
     min: float
     quartile_25: float
     quartile_50: float
@@ -45,6 +49,8 @@ class Percentiles(tp.NamedTuple):
 
 
 def ft_percentiles(data: pd.Series, count: int) -> Percentiles:
+    """Calculate the percentiles of a pandas Series"""
+    assert count != 0, "count can not be null"
     sorted_data: np.ndarray = np.sort(data)
 
     min: float = sorted_data[0]
@@ -70,6 +76,7 @@ def ft_percentiles(data: pd.Series, count: int) -> Percentiles:
 
 
 def describe(data: pd.DataFrame):
+    """Describe the basic statistics of a pandas DataFrame"""
     numeric_col = [col for col in data.columns if data[col].dtype == float]
     statistics = []
     for col in numeric_col:

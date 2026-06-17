@@ -31,6 +31,8 @@ COLORS_HOUSES = {
 #                ]
 
 def pair_plot(data: pd.DataFrame) -> None:
+    """Plot pair plots for each numeric column in the dataset,
+    grouped by Hogwarts House."""
     numeric_col = [col for col in data.columns if data[col].dtype == float]
     chosen_cols = numeric_col
     nb = len(chosen_cols)
