@@ -2,6 +2,7 @@ import sys
 import numpy as np
 import pandas as pd
 import argparse
+from sklearn.model_selection import train_test_split
 from parsing import parse_logreg_train_args
 
 
@@ -27,31 +28,59 @@ class LogregTrain():
             name: i for i, name in enumerate(self.classes)
         }
 
-        # TODO: Divide data here
+        self.test, self.validator = train_test_split(
+            training_data, 
+            test_size=0.25,
+            stratify=training_data[class_col],
+            shuffle=True
+        )
 
-        print(f"{self.enum=}")
-        training_data[class_col] = training_data[class_col].map(self.enum)
-        self.training_data = training_data
+        self.test[class_col] = self.test[class_col].map(self.enum)
 
         # X = Factors values for each feature and sample
-        self.x = np.array(training_data[factor_col])
+        self.x = np.array(self.test[factor_col])
 
         # Y = Expected class probability for each sample
-        self.y = np.zeros((self.nb_classes, len(training_data)))
-        for i in range(len(training_data)):
-            class_index = int(training_data.iloc[i][class_col])
-            print(class_index)
+        self.y = np.zeros((self.nb_classes, len(self.test)))
+        for i in range(len(self.test)):
+            class_index = int(self.test.iloc[i][class_col])
             self.y[class_index][i] = 1
 
         # Weights = Initial weights for each factor and each class
         # Or np.random ?
-        self.weights = np.full((self.nb_factors, self.nb_classes), 0)
-        # print(self.weights)
+        self.weights = np.full((self.nb_factors, self.nb_classes), 0.5)
+        # One bias for each class because the biases are factorized in equation
+        self.biases = np.zeros((self.nb_classes, 1))
+
+        self.print_all()
+        self.predict(self.x)
+
+    def print_all(self):
+        print(f"{self.enum=}")
+        print(f"{self.weights=}")
+        print(f"{self.biases=}")
+        print(f"{self.x=}")
+        print(f"{self.y=}")
+
+
+
+    def predict(self, x: np.ndarray):
+        a = self.weights.T
+        b = x.T
+        print(f"{a.shape} - {b.shape} - {self.biases.shape}")
+        raw_result = a @ b + self.biases
+        print(f"{raw_result=}")
+        sig_result = self.sigmoid(raw_result)
+        print(f"{sig_result=}")
+        result = np.zeros((self.nb_classes, len(self.test)))
+        for i in range(len(x)):
+            class_index = self.enum.get(np.argmax(sig_result.T[i]))
+            result[class_index][i] = 1
+        print(f"{result=}")
 
     def train(self, nb_cycles: int, alpha: float):
         """Train the model with gradient descent"""
         for cycle in range(nb_cycles):
-
             pass
         pass
 
