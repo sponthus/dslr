@@ -51,6 +51,16 @@ def parse_pair_plot_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def parse_scatter_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="A simple program to visualise dataset's similar features \
+            in a scatterplot"
+    )
+    add_csv_dataset_argument(parser)
+
+    return parser.parse_args()
+
+
 def parse_hist_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="A simple program to visualise dataset's features \
