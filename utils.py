@@ -60,6 +60,10 @@ def standardise_data(df: pd.DataFrame) -> pd.DataFrame:
             print(f"Standardisation: column `{column}` of type `{df.dtypes[column]}` skiped")
             continue
 
-        df[column] = (df[column] - df[column].mean()) / df[column].std()
+        count: int = ft_count(df[column])
+        mean: float = ft_mean(df[column], count)
+        _ , std = ft_deviation(df[column], mean, count)
+
+        df[column] = (df[column] - mean) / std
 
     return df
