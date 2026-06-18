@@ -4,40 +4,7 @@ import pandas as pd
 import typing as tp
 from parsing import parse_describe_args
 import argparse
-
-
-def ft_count(data: pd.Series) -> int:
-    """Count the number of rows in a pandas Series"""
-    count: int = 0
-    for _ in data:
-        count += 1
-    return count
-
-
-def ft_mean(data: pd.Series, count: int) -> float:
-    """Calculate the mean of a pandas Series"""
-    assert count != 0, "count can not be null"
-    mean: float = float("NaN")
-    total: int = 0
-
-    for item in data:
-        total += item
-
-    mean = total / count
-
-    return mean
-
-
-def ft_deviation(data: pd.Series, mean: float, count: int) -> tuple:
-    """Calculate the variance and standard deviation of a pandas Series"""
-    assert count != 0, "count can not be null"
-    variance: float = (
-        sum((x - mean) ** 2 for x in data)
-        / count
-    )
-    std: float = variance ** 0.5
-    return variance, std
-
+from utils import ft_count, ft_mean, ft_deviation
 
 class Percentiles(tp.NamedTuple):
     """A named tuple to hold the percentiles of a dataset"""
