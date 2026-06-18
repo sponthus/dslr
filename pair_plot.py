@@ -70,7 +70,7 @@ def pair_plot(data: pd.DataFrame) -> None:
             if b == nb - 1:
                 plt.xlabel(col_a)
 
-    plt.tight_layout(rect=[0, 0, 1, 0.98])
+    plt.tight_layout(rect=(0, 0, 1, 0.98))
     plt.legend()
     plt.show()
 
@@ -79,7 +79,7 @@ def main():
     try:
         args: argparse.Namespace = parse_pair_plot_args()
     except Exception as e:
-        print(f"Unexpected error: parse_describe_args(): {e}")
+        print(f"Unexpected error: parse_pair_plot_args(): {e}")
         sys.exit(1)
 
     try:
@@ -88,7 +88,7 @@ def main():
         print(e)
         sys.exit(1)
     except Exception as e:
-        print(f"Unexpected error: describe(): {e}")
+        print(f"Unexpected error: pair_plot(): {e}")
         sys.exit(1)
 
 

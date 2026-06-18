@@ -38,7 +38,7 @@ def main():
     try:
         args: argparse.Namespace = parse_hist_args()
     except Exception as e:
-        print(f"Unexpected error: parse_describe_args(): {e}")
+        print(f"Unexpected error: parse_hist_args(): {e}")
         sys.exit(1)
 
     try:
@@ -47,7 +47,7 @@ def main():
         print(e)
         sys.exit(1)
     except Exception as e:
-        print(f"Unexpected error: describe(): {e}")
+        print(f"Unexpected error: histogram(): {e}")
         sys.exit(1)
 
 
