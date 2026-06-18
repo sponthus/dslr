@@ -4,6 +4,7 @@ import pandas as pd
 import argparse
 from sklearn.model_selection import train_test_split
 from parsing import parse_logreg_train_args
+from utils import standardise_data
 
 
 class LogregTrain():
@@ -20,6 +21,8 @@ class LogregTrain():
                 raise AssertionError("")
         if class_col not in training_data.columns:
             raise AssertionError("")
+
+        training_data = standardise_data(training_data)
 
         self.classes = training_data[class_col].unique()
         self.nb_classes = len(self.classes)
