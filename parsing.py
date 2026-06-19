@@ -10,7 +10,7 @@ class ValidateCsv(argparse.Action):
                  namespace: argparse.Namespace,
                  values: str | tp.Sequence[tp.Any] | None,
                  option_string: str | None = None):
-        
+
         path = tp.cast(Path, values)
         if not path.is_file():
             parser.error(f"The file {path} does not exist.")

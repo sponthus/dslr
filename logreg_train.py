@@ -45,7 +45,6 @@ class LogregTrain():
         )
         print(f"{self.test=}\n{self.validator=}")
 
-
         # X = Factors values for each feature and sample
         self.x = np.array(self.test[factor_col])
 
@@ -54,7 +53,7 @@ class LogregTrain():
         for i in range(len(self.test)):
             class_index = int(self.test.iloc[i][class_col])
             self.y[class_index][i] = 1
-        
+
         # TODO: Fix me to evaluate training
         # self.y_validator = np.zeros((self.nb_classes, len(self.validator)))
         # for i in range(len(self.validator)):
@@ -80,7 +79,6 @@ class LogregTrain():
         print(f"{self.x=}")
         print(f"{self.y=}")
 
-
     def predict(self, x: np.ndarray) -> np.ndarray:
         a = self.weights.T
         b = x.T
@@ -95,7 +93,6 @@ class LogregTrain():
             result[class_index][i] = 1
         # print(f"{result=}")
         return result
-
 
     def plot_loss(self, losses: list):
         plt.figure()
@@ -184,7 +181,6 @@ def main():
         sys.exit(1)
     except Exception as e:
         print(f"Unexpected error: describe(): {e}")
-        raise e
         sys.exit(1)
 
 

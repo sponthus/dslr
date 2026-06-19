@@ -50,8 +50,8 @@ def main():
         sys.exit(1)
 
     try:
-        scatter_plot(args.dataset, 
-                     feature_a="Astronomy", 
+        scatter_plot(args.dataset,
+                     feature_a="Astronomy",
                      feature_b="Defense Against the Dark Arts")
     except AssertionError as e:
         print(e)

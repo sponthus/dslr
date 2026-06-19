@@ -53,6 +53,7 @@ def get_data(path: Path) -> pd.DataFrame:
         data = data.set_index("Index")
     return data
 
+
 def standardise_data(df: pd.DataFrame) -> pd.DataFrame:
     """Standardise the numerical columns of a DataFrame"""
     for column in df.columns:
