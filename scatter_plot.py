@@ -2,15 +2,8 @@ import sys
 import argparse
 import pandas as pd
 import matplotlib.pyplot as plt
+from utils import COLORS_HOUSES
 from parsing import parse_scatter_args
-
-
-COLORS_HOUSES = {
-    "Slytherin": (0, 1, 0),
-    "Gryffindor": (1, 0, 0),
-    "Ravenclaw": (0, 0, 1),
-    "Hufflepuff": (1, 1, 0)
-}
 
 
 def scatter_plot(data: pd.DataFrame, feature_a: str, feature_b: str) -> None:

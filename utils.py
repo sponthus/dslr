@@ -3,6 +3,14 @@ import pandas as pd
 from pathlib import Path
 
 
+COLORS_HOUSES = {
+    "Slytherin": (0, 1, 0),
+    "Gryffindor": (1, 0, 0),
+    "Ravenclaw": (0, 0, 1),
+    "Hufflepuff": (1, 1, 0)
+}
+
+
 def ft_count(data: pd.Series) -> int:
     """Count the number of rows in a pandas Series"""
     count: int = 0
