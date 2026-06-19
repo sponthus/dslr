@@ -57,12 +57,13 @@ def standardise_data(df: pd.DataFrame) -> pd.DataFrame:
     """Standardise the numerical columns of a DataFrame"""
     for column in df.columns:
         if df.dtypes[column] not in [float, int]:
-            print(f"Standardisation: column `{column}` of type `{df.dtypes[column]}` skiped")
+            print(f"Standardisation: column `{column}`\
+                  of type `{df.dtypes[column]}` skiped")
             continue
 
         count: int = ft_count(df[column])
         mean: float = ft_mean(df[column], count)
-        _ , std = ft_deviation(df[column], mean, count)
+        _, std = ft_deviation(df[column], mean, count)
 
         df[column] = (df[column] - mean) / std
 

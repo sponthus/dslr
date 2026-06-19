@@ -6,6 +6,7 @@ from parsing import parse_describe_args
 import argparse
 from utils import ft_count, ft_mean, ft_deviation
 
+
 class Percentiles(tp.NamedTuple):
     """A named tuple to hold the percentiles of a dataset"""
     min: float
