@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 class LogregTrain():
 
     def __init__(self):
@@ -8,7 +9,7 @@ class LogregTrain():
 
     def train(
             self,
-            data: pd.DataFrame, # Add this
+            data: pd.DataFrame,     # Add this
             nb_cycles: int,
             learning_rate: float
             ):

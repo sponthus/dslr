@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import argparse
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+# from sklearn.metrics import accuracy_score
 from parsing import parse_logreg_train_args
 from utils import standardise_data
 import matplotlib.pyplot as plt
@@ -36,7 +36,8 @@ class LogregTrain():
             i: name for i, name in enumerate(self.classes)
         }
 
-        training_data[class_col] = training_data[class_col].map(self.enum_by_name)
+        training_data[class_col] = \
+            training_data[class_col].map(self.enum_by_name)
         self.test, self.validator = train_test_split(
             training_data,
             test_size=0.25,
@@ -103,7 +104,8 @@ class LogregTrain():
         """Train the model with gradient descent"""
         losses = []
         for cycle in range(nb_cycles):
-            result = self.predict(self.x)
+            # result = self.predict(self.x)
+            self.predict(self.x)
             gradient_w, gradient_b = self.compute_gradient()
             # print(f"{gradient_w=}, \n {gradient_b=}")
             logloss = self.log_loss()
