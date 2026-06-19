@@ -38,7 +38,7 @@ class LogregTrain():
 
         training_data[class_col] = training_data[class_col].map(self.enum_by_name)
         self.test, self.validator = train_test_split(
-            training_data, 
+            training_data,
             test_size=0.25,
             stratify=training_data[class_col],
             shuffle=True
