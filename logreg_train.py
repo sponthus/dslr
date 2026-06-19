@@ -121,6 +121,10 @@ class LogregTrain():
         """Save weights to a file"""
         pass
 
+    def load_model(self):
+        """Load a model from a file"""
+        pass
+
     def log_loss(self) -> float:
         """Loss function or log loss, for visualization"""
         res: float = -(self.y * np.log(self.y_pred)
