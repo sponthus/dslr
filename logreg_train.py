@@ -8,52 +8,99 @@ from parsing import parse_logreg_train_args
 from utils import standardise_data
 import matplotlib.pyplot as plt
 
+# To think about: Use of a config file for:
+#   - dataset
+#   - chosen features
+#   - training parameters (cyles, learning rate)
 
 class LogregTrain():
 
-    def __init__(
+    def __init__(self):
+        # Remove the saved dataframe?
+        self.enum_by_name: dict| None = None
+        self.nb_classes = 0
+        self.nb_features = 0
+        self.class_col: str | None = None
+        self.features_cols: list[str] | None = None
+        self.weights: np.ndarray | None = None
+        self.biases: np.ndarray | None = None
+        pass
+
+    def is_init(self) -> bool:
+        print("coucou")
+        if not self.enum_by_name is None or self.nb_classes == 0 or self.nb_features == 0 or self.class_col is None or self.features_cols is None or self.weights is None or self.biases is None:
+            print("re")
+            return False
+        return True
+
+    def is_compatible(self, data: pd.DataFrame):
+        columns = data.columns
+        assert self.class_col in columns, f"'{self.class_col}' not in data"
+        assert all(feature in columns for feature in self.features_cols), "not all features in data"
+        assert self.nb_classes == len(data[self.class_col].unique()), "wrong nb_class"
+        assert self.nb_features == len(self.features_cols), "wrong nb_features"
+        assert self.weights.shape == (self.nb_classes, self.nb_features), "wrong weights"
+        assert self.biases.shape == (self.nb_classes, 1), "wrong biases"
+        for data_class in data[self.class_col].unique():
+            assert self.enum_by_name.get(data_class, False), "Unknown data_class"
+
+
+    def train(
             self,
-            training_data: pd.DataFrame,
+            data: pd.DataFrame,     # Add this
+            nb_cycles: int,
+            learning_rate: float,
             class_col: str,
-            factor_col: list[str]
+            features_cols: list[str]
             ):
-        """Initialize the logistic regression training class"""
-        for col in factor_col:
-            if col not in training_data.columns:
-                raise AssertionError("")
-        if class_col not in training_data.columns:
-            raise AssertionError("")
 
-        training_data = standardise_data(training_data)
+        # Check if model already trained on a specific data
+        # + compatibility with known class_col and nb_features
+        # Or determine self.class_col / self.features 
+        # Store enum if not already present
+        if self.is_init():
+            if not self.is_compatible(data):
+                raise Exception()
+        else:
+            # TODO: Factorize as init_model() ?
+            self.features_cols = features_cols
+            self.class_col = class_col
+            classes = data[class_col].unique()
+            self.nb_classes = len(classes)
+            self.nb_features = len(features_cols)
+            # Weights = Initial weights for each feature and each class
+            # Or np.random ?
+            self.weights = np.full((self.nb_features, self.nb_classes), 0.5)
+            # One bias for each class because the biases are factorized in equation
+            self.biases = np.zeros((self.nb_classes, 1))
+            self.enum_by_name = {
+                name: i for i, name in enumerate(classes)
+            }
 
-        self.classes = training_data[class_col].unique()
-        self.nb_classes = len(self.classes)
-        self.nb_factors = len(factor_col)
-        self.enum_by_name = {
-            name: i for i, name in enumerate(self.classes)
-        }
-        self.enum_by_key = {
-            i: name for i, name in enumerate(self.classes)
-        }
-
-        training_data[class_col] = \
-            training_data[class_col].map(self.enum_by_name)
-        self.test, self.validator = train_test_split(
-            training_data,
+        # TODO: Evaluate if it is better to shuffle the data
+        # at each cycle to avoid overfitting
+        # + factorize as preprocessing()
+        standardized_data: pd.DataFrame = standardise_data(data)
+        standardized_data[class_col] = standardized_data[class_col].map(self.enum_by_name)
+        training_data, validator_data = train_test_split(
+            standardized_data,
             test_size=0.25,
-            stratify=training_data[class_col],
+            stratify=standardized_data[class_col],
             shuffle=True
         )
-        print(f"{self.test=}\n{self.validator=}")
+        print(f"{training_data=}\n{validator_data=}")
 
-        # X = Factors values for each feature and sample
-        self.x = np.array(self.test[factor_col])
-
+        print(f"{self.features_cols} / {self.class_col}")
+        # X = features values for each feature and sample
+        x = np.array(training_data[self.features_cols])
         # Y = Expected class probability for each sample
-        self.y = np.zeros((self.nb_classes, len(self.test)))
-        for i in range(len(self.test)):
-            class_index = int(self.test.iloc[i][class_col])
-            self.y[class_index][i] = 1
+        y = np.zeros((self.nb_classes, len(training_data)))
+        for i in range(len(training_data)):
+            print(f"{training_data.iloc[i][self.class_col]=}")
+            class_index = int(training_data.iloc[i][self.class_col])
+            print(f"{class_index=}")
+            y[class_index][i] = 1
+        print(f"{y=}")
 
         # TODO: Fix me to evaluate training
         # self.y_validator = np.zeros((self.nb_classes, len(self.validator)))
@@ -62,53 +109,12 @@ class LogregTrain():
         #     self.y[class_index][i] = 1
         # self.validator = np.array(self.validator[factor_col])
 
-        self.y_pred = np.zeros((self.nb_classes, len(self.test)))
-
-        # Weights = Initial weights for each factor and each class
-        # Or np.random ?
-        self.weights = np.full((self.nb_factors, self.nb_classes), 0.5)
-        # One bias for each class because the biases are factorized in equation
-        self.biases = np.zeros((self.nb_classes, 1))
-
-        self.print_all()
-        self.predict(self.x)
-
-    def print_all(self):
-        print(f"{self.enum_by_name=}")
-        print(f"{self.weights=}")
-        print(f"{self.biases=}")
-        print(f"{self.x=}")
-        print(f"{self.y=}")
-
-    def predict(self, x: np.ndarray) -> np.ndarray:
-        a = self.weights.T
-        b = x.T
-        # print(f"{a.shape} - {b.shape} - {self.biases.shape}")
-        raw_result = a @ b + self.biases
-        # print(f"{raw_result=}")
-        self.y_pred = self.sigmoid(raw_result)
-        # print(f"{self.y_pred=}")
-        result = np.zeros((self.nb_classes, len(self.test)))
-        for i in range(len(x)):
-            class_index = np.argmax(self.y_pred.T[i])
-            result[class_index][i] = 1
-        # print(f"{result=}")
-        return result
-
-    def plot_loss(self, losses: list):
-        plt.figure()
-        plt.plot(losses)
-        plt.show()
-
-    def train(self, nb_cycles: int, learning_rate: float):
-        """Train the model with gradient descent"""
         losses = []
         for cycle in range(nb_cycles):
-            # result = self.predict(self.x)
-            self.predict(self.x)
-            gradient_w, gradient_b = self.compute_gradient()
+            y_pred: np.ndarray = self.predict(x)
+            gradient_w, gradient_b = self.compute_gradient(x, y_pred, y)
             # print(f"{gradient_w=}, \n {gradient_b=}")
-            logloss = self.log_loss()
+            logloss = self.log_loss(y, y_pred)
             losses.append(logloss)
             self.weights = self.update(self.weights, gradient_w, learning_rate)
             self.biases = self.update(self.biases, gradient_b, learning_rate)
@@ -119,34 +125,7 @@ class LogregTrain():
         # score = accuracy_score(validation, self.y_validator)
         # print(f"{score=}")
 
-    def save_weights(self):
-        """Save weights to a file"""
-        pass
-
-    def load_model(self):
-        """Load a model from a file"""
-        pass
-
-    def log_loss(self) -> float:
-        """Loss function or log loss, for visualization"""
-        res: float = -(self.y * np.log(self.y_pred)
-                       + (1 - self.y) * np.log(1 - self.y_pred)).mean()
-        return res
-
-    def compute_gradient(self):
-        """Uses derivative from log loss function, for gradient descent"""
-        # res = ((self.y_pred - y) * x).mean()
-        error = self.y_pred - self.y
-        gradient_w = (self.x.T @ error.T) / self.x.shape[0]
-        error_b = self.y_pred - self.y
-        gradient_b = np.sum(error_b, axis=1, keepdims=True) / self.x.shape[0]
-        return gradient_w, gradient_b
-
-    def sigmoid(self, x: np.ndarray) -> np.ndarray:
-        """Sigmoid function, turns any value to 0-1"""
-        res: np.ndarray = 1 / (1 + np.exp(-x))
-        return res
-
+        
     def update(
             self,
             to_update: np.ndarray,
@@ -155,7 +134,84 @@ class LogregTrain():
             ) -> np.ndarray:
         """Updates weights or bias with gradient modulated by learning_rate"""
         return to_update - (gradient * learning_rate)
+    
+    def predict(self, x: np.ndarray) -> np.ndarray:
+        # print(f"{a.shape} - {b.shape} - {self.biases.shape}")
+        raw_result = self.weights.T @ x.T + self.biases
+        # print(f"{raw_result=}")
+        y_pred: np.ndarray = self.sigmoid(raw_result)
+        # print(f"{self.y_pred=}")
+        return y_pred
 
+    def predictor(self, x: np.ndarray) -> np.ndarray:
+        # TODO: Check presence of enum, weights, biases ...
+        y_pred = self.predict(x)
+        
+        result = np.zeros((self.nb_classes, len(x)))
+        for i in range(len(x)):
+            class_index = np.argmax(y_pred.T[i])
+            result[class_index][i] = 1
+
+        # Create file with answers
+        return result
+        # print(f"{result=}")
+
+        # Add function that translate results
+        # Save results in a .csv file
+
+    #### COMPUTATIONS
+    # TODO: Move every stats calculation from class into different file?
+
+    def log_loss(self, y: np.ndarray, y_pred: np.ndarray) -> float:
+        """Loss function or log loss, for visualization"""
+        res: float = -(y * np.log(y_pred)
+                       + (1 - y) * np.log(1 - y_pred)).mean()
+        return res
+    
+    def compute_gradient(self, x: np.ndarray, y_pred: np.ndarray, y: np.ndarray):
+        """Uses derivative from log loss function, for gradient descent"""
+        # res = ((self.y_pred - y) * x).mean()
+        error = y_pred - y
+        gradient_w = (x.T @ error.T) / x.shape[0]
+        error_b = y_pred - y
+        gradient_b = np.sum(error_b, axis=1, keepdims=True) / x.shape[0]
+        return gradient_w, gradient_b
+
+    def sigmoid(self, x: np.ndarray) -> np.ndarray:
+        """Sigmoid function, turns any value to 0-1"""
+        res: np.ndarray = 1 / (1 + np.exp(-x))
+        return res
+
+    #### LOAD AND SAVE
+
+    def save_weights(self):
+        """Save weights to a file"""
+        # Use json file
+        # Save used feature for training and enum
+        pass
+
+    def load_model(self):
+        """Load a model from a file"""
+        # Use json file
+        pass
+
+    ### TRACK
+    # TODO: Add more figure for training stats visualisation (accuracy)
+
+    def plot_loss(self, losses: list):
+        plt.figure()
+        plt.plot(losses)
+        plt.show()
+
+    ### DEBUG
+
+    def print_all(self):
+        print(f"{self.enum_by_name=}")
+        print(f"{self.weights=}")
+        print(f"{self.biases=}")
+        print(f"{self.nb_classes=}, {self.nb_features=}")
+    
+# TODO: Add main
 
 def logreg_train(data: pd.DataFrame) -> None:
     chosen_cols = [
@@ -169,9 +225,8 @@ def logreg_train(data: pd.DataFrame) -> None:
     data = data[all_cols]
     data = data.dropna(axis=0)
     print(data)
-    test = LogregTrain(data, class_col, chosen_cols)
-    test.train(1000, 0.01)
-
+    test = LogregTrain()
+    test.train(data, nb_cycles=1000, learning_rate=0.01, class_col=class_col, features_cols=chosen_cols)
 
 def main():
     try:
