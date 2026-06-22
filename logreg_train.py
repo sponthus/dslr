@@ -304,7 +304,9 @@ class LogregTrain():
     def print_all(self):
         print(f"{self.enum_by_name=}")
         print(f"{self.weights=}")
+        print(f"{self.weights.shape=}")
         print(f"{self.biases=}")
+        print(f"{self.biases.shape=}")
         print(f"{self.nb_classes=}, {self.nb_features=}")
     
 # TODO: Add main
@@ -323,6 +325,8 @@ def logreg_train(data: pd.DataFrame) -> None:
     print(data)
     test = LogregTrain()
     test.train(data, nb_cycles=1000, learning_rate=0.01, class_col=class_col, features_cols=chosen_cols)
+
+    test.save_weights()
 
 def main():
     try:
