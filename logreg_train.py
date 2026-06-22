@@ -141,10 +141,12 @@ class LogregTrain():
         # score = accuracy_score(validation, self.y_validator)
         # print(f"{score=}")
 
-    def predictor(self, x: np.ndarray) -> np.ndarray:
+    def predictor(self, data: pd.DataFrame) -> np.ndarray:
         """Used to predict values from a trained model"""
         assert self.is_init(), "not initialized"
-        # TODO: Check presence of enum, weights, biases ...
+        assert self.is_compatible(data, training=False), "model training is not compatible with data"
+
+        x: np.ndarray = np.array(data[self.features_cols])
         y_pred = self.predict(x)
         
         result = np.zeros((self.nb_classes, len(x)))
@@ -153,11 +155,10 @@ class LogregTrain():
             result[class_index][i] = 1
 
         # Create file with answers
-        return result
-        # print(f"{result=}")
-
         # Add function that translate results
         # Save results in a .csv file
+        # print(f"{result=}")
+        return result
 
     #### COMPUTATIONS
     # TODO: Move every stats calculation from class into different file?
