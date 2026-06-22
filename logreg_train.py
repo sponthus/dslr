@@ -1,7 +1,12 @@
+from __future__ import annotations
+import os
 import sys
+import json
 import numpy as np
 import pandas as pd
 import argparse
+from pathlib import Path
+from datetime import datetime
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from parsing import parse_logreg_train_args
@@ -15,16 +20,53 @@ import matplotlib.pyplot as plt
 
 class LogregTrain():
 
-    def __init__(self):
+    def __init__(
+            self,
+            enum_by_name: dict | None = None,
+            nb_classes = 0,
+            nb_features = 0,
+            class_col: str | None = None,
+            features_cols: list[str] | None = None,
+            weights: np.ndarray | None = None,
+            biases: np.ndarray | None = None
+            ):
+
         # Remove the saved dataframe?
-        self.enum_by_name: dict| None = None
-        self.nb_classes = 0
-        self.nb_features = 0
-        self.class_col: str | None = None
-        self.features_cols: list[str] | None = None
-        self.weights: np.ndarray | None = None
-        self.biases: np.ndarray | None = None
-        pass
+        self.enum_by_name: dict | None = enum_by_name
+        self.nb_classes = nb_classes
+        self.nb_features = nb_features
+        self.class_col: str | None = class_col
+        self.features_cols: list[str] | None = features_cols
+        self.weights: np.ndarray | None = weights
+        self.biases: np.ndarray | None = biases
+
+    @classmethod
+    def from_file(cls, model_path: Path) -> LogregTrain:
+        if not model_path.exists():
+            raise FileNotFoundError(f"The file '{model_path}' does not exist.")
+
+        if not model_path.is_file():
+            raise FileNotFoundError(f"The path '{model_path}' is not a file.")
+        
+        with open(model_path, 'r') as f:
+            json_str:str = f.read()
+        
+        data: dict = json.loads(json_str)
+    
+        # print(data)
+        # print(type(data["class_enum"]))
+
+        model = LogregTrain(
+            data["class_enum"],
+            data["nb_classes"],
+            data["nb_features"],
+            data["class_col"],
+            data["features_cols"],
+            np.array(data["weights"]),
+            np.array(data["biases"])
+        )
+
+        return model
 
     #### CONDITIONS
 
