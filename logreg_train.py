@@ -220,7 +220,26 @@ class LogregTrain():
         """Save weights to a file"""
         # Use json file
         # Save used feature for training and enum
-        pass
+
+        save_dict= {
+            "class_enum": self.enum_by_name,
+            "nb_classes": self.nb_classes,
+            "nb_features": self.nb_features,
+            "class_col": self.class_col,
+            "features_cols": self.features_cols,
+            "weights": self.weights.tolist(),
+            "biases": self.biases.tolist(),
+        }
+
+        model_folder: str = "models"
+        model_file: str = datetime.now().strftime("DSLR_model_%Y-%m-%d_%H-%M-%S.json")
+        model_path = os.path.join(model_folder, model_file)
+
+        if not os.path.exists(model_folder):
+            os.mkdir(model_folder)
+
+        with open(model_path, 'w') as f:
+            json.dump(save_dict, f, indent=4)
 
     def load_model(self):
         """Load a model from a file"""
