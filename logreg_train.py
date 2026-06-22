@@ -28,7 +28,7 @@ class LogregTrain():
 
     def is_init(self) -> bool:
         print("coucou")
-        if not self.enum_by_name is None or self.nb_classes == 0 or self.nb_features == 0 or self.class_col is None or self.features_cols is None or self.weights is None or self.biases is None:
+        if self.enum_by_name is None or self.nb_classes == 0 or self.nb_features == 0 or self.class_col is None or self.features_cols is None or self.weights is None or self.biases is None:
             print("re")
             return False
         return True
@@ -45,9 +45,26 @@ class LogregTrain():
             assert self.enum_by_name.get(data_class, False), "Unknown data_class"
 
 
+    def initialize(self, data: pd.DataFrame, features_cols: list[str], class_col: str):
+        self.features_cols = features_cols
+        self.class_col = class_col
+        classes = data[class_col].unique()
+        self.nb_classes = len(classes)
+        self.nb_features = len(features_cols)
+
+        # Weights = Initial weights for each feature and each class
+        # Or np.random ?
+        self.weights = np.full((self.nb_features, self.nb_classes), 0.5)
+        # One bias for each class because the biases are factorized in equation
+        self.biases = np.zeros((self.nb_classes, 1))
+        self.enum_by_name = {
+            name: i for i, name in enumerate(classes)
+        }
+
+
     def train(
             self,
-            data: pd.DataFrame,     # Add this
+            data: pd.DataFrame,
             nb_cycles: int,
             learning_rate: float,
             class_col: str,
@@ -62,30 +79,21 @@ class LogregTrain():
             if not self.is_compatible(data):
                 raise Exception()
         else:
-            # TODO: Factorize as init_model() ?
-            self.features_cols = features_cols
-            self.class_col = class_col
-            classes = data[class_col].unique()
-            self.nb_classes = len(classes)
-            self.nb_features = len(features_cols)
-            # Weights = Initial weights for each feature and each class
-            # Or np.random ?
-            self.weights = np.full((self.nb_features, self.nb_classes), 0.5)
-            # One bias for each class because the biases are factorized in equation
-            self.biases = np.zeros((self.nb_classes, 1))
-            self.enum_by_name = {
-                name: i for i, name in enumerate(classes)
-            }
+            self.initialize(
+                data=data, 
+                features_cols=features_cols, 
+                class_col=class_col
+            )
 
         # TODO: Evaluate if it is better to shuffle the data
         # at each cycle to avoid overfitting
         # + factorize as preprocessing()
-        standardized_data: pd.DataFrame = standardise_data(data)
-        standardized_data[class_col] = standardized_data[class_col].map(self.enum_by_name)
+        sd_data: pd.DataFrame = standardise_data(data)
+        sd_data[class_col] = sd_data[class_col].map(self.enum_by_name)
         training_data, validator_data = train_test_split(
-            standardized_data,
+            sd_data,
             test_size=0.25,
-            stratify=standardized_data[class_col],
+            stratify=sd_data[class_col],
             shuffle=True
         )
         print(f"{training_data=}\n{validator_data=}")
