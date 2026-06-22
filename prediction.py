@@ -1,8 +1,6 @@
 from __future__ import annotations
 import sys
-import pandas as pd
 import argparse
-from pathlib import Path
 from parsing import parse_predictor_args
 from logreg import LogregTrain
 
