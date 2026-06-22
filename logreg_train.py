@@ -128,7 +128,9 @@ class LogregTrain():
             self.weights = self.update(self.weights, gradient_w, learning_rate)
             self.biases = self.update(self.biases, gradient_b, learning_rate)
             # print(f"{self.weights}")
-        self.plot_loss(losses)
+        self.plot(losses, name="Losses through training")
+        print(f"{scores=}")
+        self.plot(scores, name="Accuracy scores through training")
 
         y_validator = np.zeros((self.nb_classes, len(validator_data)))
         for i in range(len(validator_data)):
@@ -217,9 +219,10 @@ class LogregTrain():
     ### TRACK
     # TODO: Add more figure for training stats visualisation (accuracy)
 
-    def plot_loss(self, losses: list):
+    def plot(self, data: list, name: str):
         plt.figure()
-        plt.plot(losses)
+        plt.title(name)
+        plt.plot(data)
         plt.show()
 
     ### DEBUG
