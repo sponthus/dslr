@@ -200,7 +200,6 @@ class Logreg():
         data.reset_index(inplace=True)
         data = data[columns].dropna(axis=0)
         data = data.set_index("Index")
-        data.to_csv("initial.csv", sep=",", index_label="Index")
         data = standardise_data(data)
 
         x: np.ndarray = np.array(data)
