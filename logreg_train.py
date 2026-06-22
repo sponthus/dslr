@@ -2,7 +2,7 @@ import sys
 import pandas as pd
 import argparse
 from parsing import parse_logreg_train_args
-from logreg import LogregTrain
+from logreg import Logreg
 
 
 def logreg_train(data: pd.DataFrame) -> None:
@@ -17,7 +17,7 @@ def logreg_train(data: pd.DataFrame) -> None:
     data = data[all_cols]
     data = data.dropna(axis=0)
     print(data)
-    test = LogregTrain()
+    test = Logreg()
     test.train(data, nb_cycles=1000, learning_rate=0.01, class_col=class_col, features_cols=chosen_cols)
 
     test.save_weights()

@@ -2,7 +2,7 @@ from __future__ import annotations
 import sys
 import argparse
 from parsing import parse_predictor_args
-from logreg import LogregTrain
+from logreg import Logreg
 
 
 def main():
@@ -13,7 +13,7 @@ def main():
         sys.exit(1)
 
     try:
-        test: LogregTrain = LogregTrain.from_file(args.model)
+        test: Logreg = Logreg.from_file(args.model)
         test.predictor(args.dataset)
 
     except AssertionError as e:

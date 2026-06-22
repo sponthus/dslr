@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 #   - chosen features
 #   - training parameters (cyles, learning rate)
 
-class LogregTrain():
+class Logreg():
 
     def __init__(
             self,
@@ -38,7 +38,7 @@ class LogregTrain():
         self.biases: np.ndarray | None = biases
 
     @classmethod
-    def from_file(cls, model_path: Path) -> LogregTrain:
+    def from_file(cls, model_path: Path) -> Logreg:
         if not model_path.exists():
             raise FileNotFoundError(f"The file '{model_path}' does not exist.")
 
@@ -53,7 +53,7 @@ class LogregTrain():
         # print(data)
         # print(type(data["class_enum"]))
 
-        model = LogregTrain(
+        model = Logreg(
             data["class_enum"],
             data["nb_classes"],
             data["nb_features"],
