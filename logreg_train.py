@@ -29,9 +29,7 @@ class LogregTrain():
     #### CONDITIONS
 
     def is_init(self) -> bool:
-        print("coucou")
         if self.enum_by_name is None or self.nb_classes == 0 or self.nb_features == 0 or self.class_col is None or self.features_cols is None or self.weights is None or self.biases is None:
-            print("re")
             return False
         return True
 
@@ -116,7 +114,7 @@ class LogregTrain():
             class_index = int(training_data.iloc[i][self.class_col])
             # print(f"{class_index=}")
             y[class_index][i] = 1
-        print(f"{y=}")
+        # print(f"{y=}")
 
         losses = []
         for cycle in range(nb_cycles):
@@ -129,7 +127,7 @@ class LogregTrain():
             self.biases = self.update(self.biases, gradient_b, learning_rate)
             # print(f"{self.weights}")
         self.plot(losses, name="Losses through training")
-        print(f"{scores=}")
+        # print(f"{scores=}")
         self.plot(scores, name="Accuracy scores through training")
 
         y_validator = np.zeros((self.nb_classes, len(validator_data)))
