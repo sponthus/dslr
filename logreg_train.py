@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import argparse
 from sklearn.model_selection import train_test_split
-# from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score
 from parsing import parse_logreg_train_args
 from utils import standardise_data
 import matplotlib.pyplot as plt
@@ -118,13 +118,6 @@ class LogregTrain():
             y[class_index][i] = 1
         print(f"{y=}")
 
-        # TODO: Fix me to evaluate training
-        # self.y_validator = np.zeros((self.nb_classes, len(self.validator)))
-        # for i in range(len(self.validator)):
-        #     class_index = int(self.validator.iloc[i][class_col])
-        #     self.y[class_index][i] = 1
-        # self.validator = np.array(self.validator[factor_col])
-
         losses = []
         for cycle in range(nb_cycles):
             y_pred: np.ndarray = self.predict(x)
@@ -136,10 +129,18 @@ class LogregTrain():
             self.biases = self.update(self.biases, gradient_b, learning_rate)
             # print(f"{self.weights}")
         self.plot_loss(losses)
-        # validation = self.predict(self.validator)
-        # print(f"{validation=}\n{self.}")
-        # score = accuracy_score(validation, self.y_validator)
-        # print(f"{score=}")
+
+        y_validator = np.zeros((self.nb_classes, len(validator_data)))
+        for i in range(len(validator_data)):
+            class_index = int(validator_data.iloc[i][class_col])
+            y_validator[class_index][i] = 1
+        y_validator = np.argmax(y_validator, axis=0)
+        validator_data = np.array(validator_data[self.features_cols])
+    
+        validation = np.argmax(self.predict(validator_data), axis=0)
+        print(f"{validation=} / {y_validator=}\n")
+        score = accuracy_score(y_true=y_validator, y_pred=validation)
+        print(f"{score=}")
 
     def predictor(self, data: pd.DataFrame) -> np.ndarray:
         """Used to predict values from a trained model"""
