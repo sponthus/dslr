@@ -192,12 +192,21 @@ class LogregTrain():
         score = accuracy_score(y_true=y_validator, y_pred=y_pred_validator)
         print(f"{score=}")
 
-    def predictor(self, data: pd.DataFrame) -> np.ndarray:
+    def predictor(self, data: pd.DataFrame) -> None:
         """Used to predict values from a trained model"""
         assert self.is_init(), "not initialized"
         assert self.is_compatible(data, training=False), "model training is not compatible with data"
 
-        x: np.ndarray = np.array(data[self.features_cols])
+        columns = ["Index"]
+        columns.extend(self.features_cols)
+
+        data.reset_index(inplace=True)
+        data = data[columns].dropna(axis=0)
+        data = data.set_index("Index")
+        data.to_csv("initial.csv", sep=",", index_label="Index")
+        data = standardise_data(data)
+
+        x: np.ndarray = np.array(data)
         y_pred = self.predict(x)
 
         enum_by_id = {
@@ -205,18 +214,13 @@ class LogregTrain():
         }
         
         str_results = []
-        # result = np.zeros((self.nb_classes, len(x)))
+        class_index = np.argmax(y_pred.T, axis=1)
         for i in range(len(x)):
-            class_index = np.argmax(y_pred.T[i])
-            str_results.append(enum_by_id.get(class_index))
-            print(f"{i}: {class_index} = {enum_by_id.get(class_index)}")
-            # result[class_index][i] = 1
+            str_results.append(enum_by_id.get(class_index[i]))
 
-        # Create file houses.csv with answers
-        # Add function that translate results
-        # Save results in a .csv file
-        # print(f"{result=}")
-        return result
+        data[self.class_col] = str_results
+        print(data)
+        data.to_csv("houses.csv" , sep=",", index_label="Index", columns=[self.class_col])
 
     #### COMPUTATIONS
     # TODO: Move every stats calculation from class into different file?
