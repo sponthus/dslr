@@ -77,3 +77,18 @@ def parse_logreg_train_args() -> argparse.Namespace:
     )
     add_csv_dataset_argument(parser)
     return parser.parse_args()
+
+def parse_predictor_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="A simple program to train a model with "
+                    "logistic regression method"
+    )
+    add_csv_dataset_argument(parser)
+
+    parser.add_argument(
+        "model",
+        type=Path,
+        help="The train model used for the prediction"
+    )
+
+    return parser.parse_args()
