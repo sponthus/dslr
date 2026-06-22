@@ -35,16 +35,19 @@ class LogregTrain():
             return False
         return True
 
-    def is_compatible(self, data: pd.DataFrame):
+    def is_compatible(self, data: pd.DataFrame, training: bool):
+        """Checks if a dataset is compatible with the class initialization
+        and the class attributes validity."""
         columns = data.columns
         assert self.class_col in columns, f"'{self.class_col}' not in data"
         assert all(feature in columns for feature in self.features_cols), "not all features in data"
-        assert self.nb_classes == len(data[self.class_col].unique()), "wrong nb_class"
         assert self.nb_features == len(self.features_cols), "wrong nb_features"
         assert self.weights.shape == (self.nb_classes, self.nb_features), "wrong weights"
         assert self.biases.shape == (self.nb_classes, 1), "wrong biases"
-        for data_class in data[self.class_col].unique():
-            assert self.enum_by_name.get(data_class, False), "Unknown data_class"
+        if training:
+            assert self.nb_classes == len(data[self.class_col].unique()), "wrong nb_class"
+            for data_class in data[self.class_col].unique():
+                assert self.enum_by_name.get(data_class, False), "Unknown data_class"
 
     #### INITIALIZATION
 
@@ -81,7 +84,7 @@ class LogregTrain():
         # Or determine self.class_col / self.features 
         # Store enum if not already present
         if self.is_init():
-            if not self.is_compatible(data):
+            if not self.is_compatible(data, training=True):
                 raise Exception()
         else:
             self.initialize(
@@ -109,9 +112,9 @@ class LogregTrain():
         # Y = Expected class probability for each sample
         y = np.zeros((self.nb_classes, len(training_data)))
         for i in range(len(training_data)):
-            print(f"{training_data.iloc[i][self.class_col]=}")
+            # print(f"{training_data.iloc[i][self.class_col]=}")
             class_index = int(training_data.iloc[i][self.class_col])
-            print(f"{class_index=}")
+            # print(f"{class_index=}")
             y[class_index][i] = 1
         print(f"{y=}")
 
@@ -140,6 +143,7 @@ class LogregTrain():
 
     def predictor(self, x: np.ndarray) -> np.ndarray:
         """Used to predict values from a trained model"""
+        assert self.is_init(), "not initialized"
         # TODO: Check presence of enum, weights, biases ...
         y_pred = self.predict(x)
         
