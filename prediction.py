@@ -4,7 +4,7 @@ import pandas as pd
 import argparse
 from pathlib import Path
 from parsing import parse_predictor_args
-from logreg_train import LogregTrain
+from logreg import LogregTrain
 
 
 def main():
