@@ -26,6 +26,8 @@ class LogregTrain():
         self.biases: np.ndarray | None = None
         pass
 
+    #### CONDITIONS
+
     def is_init(self) -> bool:
         print("coucou")
         if self.enum_by_name is None or self.nb_classes == 0 or self.nb_features == 0 or self.class_col is None or self.features_cols is None or self.weights is None or self.biases is None:
@@ -44,8 +46,10 @@ class LogregTrain():
         for data_class in data[self.class_col].unique():
             assert self.enum_by_name.get(data_class, False), "Unknown data_class"
 
+    #### INITIALIZATION
 
     def initialize(self, data: pd.DataFrame, features_cols: list[str], class_col: str):
+        """Initializes features_cols, class_col, enum, weights and biases for the class"""
         self.features_cols = features_cols
         self.class_col = class_col
         classes = data[class_col].unique()
@@ -61,6 +65,7 @@ class LogregTrain():
             name: i for i, name in enumerate(classes)
         }
 
+    #### USAGE
 
     def train(
             self,
@@ -96,7 +101,7 @@ class LogregTrain():
             stratify=sd_data[class_col],
             shuffle=True
         )
-        print(f"{training_data=}\n{validator_data=}")
+        # print(f"{training_data=}\n{validator_data=}")
 
         print(f"{self.features_cols} / {self.class_col}")
         # X = features values for each feature and sample
@@ -133,25 +138,8 @@ class LogregTrain():
         # score = accuracy_score(validation, self.y_validator)
         # print(f"{score=}")
 
-        
-    def update(
-            self,
-            to_update: np.ndarray,
-            gradient: np.ndarray,
-            learning_rate: float
-            ) -> np.ndarray:
-        """Updates weights or bias with gradient modulated by learning_rate"""
-        return to_update - (gradient * learning_rate)
-    
-    def predict(self, x: np.ndarray) -> np.ndarray:
-        # print(f"{a.shape} - {b.shape} - {self.biases.shape}")
-        raw_result = self.weights.T @ x.T + self.biases
-        # print(f"{raw_result=}")
-        y_pred: np.ndarray = self.sigmoid(raw_result)
-        # print(f"{self.y_pred=}")
-        return y_pred
-
     def predictor(self, x: np.ndarray) -> np.ndarray:
+        """Used to predict values from a trained model"""
         # TODO: Check presence of enum, weights, biases ...
         y_pred = self.predict(x)
         
@@ -169,6 +157,23 @@ class LogregTrain():
 
     #### COMPUTATIONS
     # TODO: Move every stats calculation from class into different file?
+
+    def update(
+            self,
+            to_update: np.ndarray,
+            gradient: np.ndarray,
+            learning_rate: float
+            ) -> np.ndarray:
+        """Updates weights or bias with gradient modulated by learning_rate"""
+        return to_update - (gradient * learning_rate)
+
+    def predict(self, x: np.ndarray) -> np.ndarray:
+        # print(f"{a.shape} - {b.shape} - {self.biases.shape}")
+        raw_result = self.weights.T @ x.T + self.biases
+        # print(f"{raw_result=}")
+        y_pred: np.ndarray = self.sigmoid(raw_result)
+        # print(f"{self.y_pred=}")
+        return y_pred
 
     def log_loss(self, y: np.ndarray, y_pred: np.ndarray) -> float:
         """Loss function or log loss, for visualization"""
