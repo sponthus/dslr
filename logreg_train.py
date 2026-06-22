@@ -155,13 +155,20 @@ class LogregTrain():
 
         x: np.ndarray = np.array(data[self.features_cols])
         y_pred = self.predict(x)
+
+        enum_by_id = {
+            value: key for key, value in self.enum_by_name.items()
+        }
         
-        result = np.zeros((self.nb_classes, len(x)))
+        str_results = []
+        # result = np.zeros((self.nb_classes, len(x)))
         for i in range(len(x)):
             class_index = np.argmax(y_pred.T[i])
-            result[class_index][i] = 1
+            str_results.append(enum_by_id.get(class_index))
+            print(f"{i}: {class_index} = {enum_by_id.get(class_index)}")
+            # result[class_index][i] = 1
 
-        # Create file with answers
+        # Create file houses.csv with answers
         # Add function that translate results
         # Save results in a .csv file
         # print(f"{result=}")
