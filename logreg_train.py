@@ -117,12 +117,18 @@ class LogregTrain():
         # print(f"{y=}")
 
         losses = []
+        scores = []
         for cycle in range(nb_cycles):
             y_pred: np.ndarray = self.predict(x)
             gradient_w, gradient_b = self.compute_gradient(x, y_pred, y)
             # print(f"{gradient_w=}, \n {gradient_b=}")
+
+            # For graphical representations
             logloss = self.log_loss(y, y_pred)
             losses.append(logloss)
+            score = accuracy_score(y_true=np.argmax(y, axis=0), y_pred=np.argmax(y_pred, axis=0))
+            scores.append(score)
+
             self.weights = self.update(self.weights, gradient_w, learning_rate)
             self.biases = self.update(self.biases, gradient_b, learning_rate)
             # print(f"{self.weights}")
@@ -137,9 +143,9 @@ class LogregTrain():
         y_validator = np.argmax(y_validator, axis=0)
         validator_data = np.array(validator_data[self.features_cols])
     
-        validation = np.argmax(self.predict(validator_data), axis=0)
-        print(f"{validation=} / {y_validator=}\n")
-        score = accuracy_score(y_true=y_validator, y_pred=validation)
+        y_pred_validator = np.argmax(self.predict(validator_data), axis=0)
+        # print(f"{y_pred_validator=} / {y_validator=}\n")
+        score = accuracy_score(y_true=y_validator, y_pred=y_pred_validator)
         print(f"{score=}")
 
     def predictor(self, data: pd.DataFrame) -> np.ndarray:
