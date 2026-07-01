@@ -13,10 +13,7 @@ def logreg_train(data: pd.DataFrame) -> None:
         "Astronomy", "Herbology"
         ]
     class_col = "Hogwarts House"
-    all_cols = chosen_cols + [class_col]
-    data = data[all_cols]
-    data = data.dropna(axis=0)
-    print(data)
+    # print(data)
     test = Logreg()
     test.train(data, nb_cycles=1000, learning_rate=0.01, class_col=class_col, features_cols=chosen_cols)
 

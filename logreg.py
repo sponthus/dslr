@@ -136,12 +136,16 @@ class Logreg():
         # TODO: Evaluate if it is better to shuffle the data
         # at each cycle to avoid overfitting
         # + factorize as preprocessing()
-        sd_data: pd.DataFrame = standardise_data(data)
-        sd_data[class_col] = sd_data[class_col].map(self.enum_by_name)
+        all_cols = features_cols + [class_col]
+        data = data[all_cols]
+        data = data.dropna(axis=0)
+        assert not data.empty, "data contains nan only"
+        data = standardise_data(data)
+        data.loc[:, class_col] = data[class_col].map(self.enum_by_name)
         training_data, validator_data = train_test_split(
-            sd_data,
+            data,
             test_size=0.25,
-            stratify=sd_data[class_col],
+            stratify=data[class_col],
             shuffle=True
         )
         # print(f"{training_data=}\n{validator_data=}")

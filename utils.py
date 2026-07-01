@@ -74,6 +74,6 @@ def standardise_data(df: pd.DataFrame) -> pd.DataFrame:
         mean: float = ft_mean(df[column], count)
         _, std = ft_deviation(df[column], mean, count)
 
-        df[column] = (df[column] - mean) / std
+        df.loc[:, column] = (df[column] - mean) / std
 
     return df
