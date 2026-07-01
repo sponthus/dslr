@@ -176,18 +176,10 @@ class Logreg():
         losses = []
         scores = []
         for cycle in range(nb_cycles):
-            y_pred: np.ndarray = self.predict(x)
-            gradient_w, gradient_b = self.compute_gradient(x, y_pred, y)
-            # print(f"{gradient_w=}, \n {gradient_b=}")
-
-            # For graphical representations
-            logloss = self.log_loss(y, y_pred)
+            logloss, score = self._epoch(x, y, learning_rate)
             losses.append(logloss)
-            score = accuracy_score(y_true=np.argmax(y, axis=0), y_pred=np.argmax(y_pred, axis=0))
             scores.append(score)
-
-            self.weights = self.update(self.weights, gradient_w, learning_rate)
-            self.biases = self.update(self.biases, gradient_b, learning_rate)
+            
             # print(f"{self.weights}")
         self.plot(losses, name="Losses through training")
         # print(f"{scores=}")
@@ -204,6 +196,19 @@ class Logreg():
         # print(f"{y_pred_validator=} / {y_validator=}\n")
         score = accuracy_score(y_true=y_validator, y_pred=y_pred_validator)
         print(f"{score=}")
+
+    def _epoch(self, x: np.ndarray, y: np.ndarray, learning_rate: float):
+        y_pred: np.ndarray = self.predict(x)
+        gradient_w, gradient_b = self.compute_gradient(x, y_pred, y)
+        # print(f"{gradient_w=}, \n {gradient_b=}")
+
+        # For graphical representations
+        logloss = self.log_loss(y, y_pred)
+        score = accuracy_score(y_true=np.argmax(y, axis=0), y_pred=np.argmax(y_pred, axis=0))
+
+        self.weights = self.update(self.weights, gradient_w, learning_rate)
+        self.biases = self.update(self.biases, gradient_b, learning_rate)
+        return logloss, score
 
     def predictor(self, data: pd.DataFrame, drop_na: bool = True) -> None:
         """Used to predict values from a trained model"""
