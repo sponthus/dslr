@@ -91,4 +91,10 @@ def parse_predictor_args() -> argparse.Namespace:
         help="The train model used for the prediction"
     )
 
+    parser.add_argument(
+        "--drop-na",
+        action="store_true",
+        help="If missing feature data, drops it instead of replacing it with known trimean"
+    )
+
     return parser.parse_args()

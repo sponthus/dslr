@@ -205,7 +205,7 @@ class Logreg():
         score = accuracy_score(y_true=y_validator, y_pred=y_pred_validator)
         print(f"{score=}")
 
-    def predictor(self, data: pd.DataFrame) -> None:
+    def predictor(self, data: pd.DataFrame, drop_na: bool = True) -> None:
         """Used to predict values from a trained model"""
         assert self.is_init(), "not initialized"
         assert self.is_compatible(data, training=False), "model training is not compatible with data"
@@ -214,8 +214,12 @@ class Logreg():
         columns.extend(self.features_cols)
 
         data.reset_index(inplace=True)
-        data = data[columns].dropna(axis=0)
+        data = data[columns]
         data = data.set_index("Index")
+        if drop_na:
+            data = data.dropna(axis=0)
+        else:
+            data = self._replace_na(data)
         data = standardise_data(data)
 
         x: np.ndarray = np.array(data)
@@ -273,6 +277,22 @@ class Logreg():
         """Sigmoid function, turns any value to 0-1"""
         res: np.ndarray = 1 / (1 + np.exp(-x))
         return res
+
+    def _replace_na(self, data: pd.DataFrame) -> pd.DataFrame:
+        """Replaces nan values with known trimean for the feature
+        
+        If all features have no data, the row is deleted"""
+        df_copy: pd.DataFrame = data.copy()
+        for index, row in data.iterrows():
+            missing = 0
+            for feature in self.features_cols:
+                if np.isnan(row[feature]):
+                    missing += 1
+                    df_copy.loc[index, feature] = self.trimeans.get(feature, 0)
+            if missing == self.nb_features:
+                df_copy = df_copy.drop(index=index)
+        return df_copy
+
 
     #### LOAD AND SAVE
 

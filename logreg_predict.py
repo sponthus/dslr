@@ -14,7 +14,7 @@ def main():
 
     try:
         test: Logreg = Logreg.from_file(args.model)
-        test.predictor(args.dataset)
+        test.predictor(args.dataset, drop_na=args.drop_na)
 
     except AssertionError as e:
         print(e)
