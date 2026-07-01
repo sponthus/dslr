@@ -76,13 +76,14 @@ class Logreg():
         """Checks if a dataset is compatible with the class initialization
         and the class attributes validity."""
         columns = data.columns
-        assert all(feature in columns for feature in self.features_cols), "not all features in data"
+        assert self.features_cols is not None and all(feature in columns for feature in self.features_cols), "not all features in data"
         assert self.nb_features == len(self.features_cols), "wrong nb_features"
-        assert self.weights.shape == (self.nb_features, self.nb_classes), "wrong weights"
-        assert self.biases.shape == (self.nb_classes, 1), "wrong biases"
+        assert self.weights is not None and self.weights.shape == (self.nb_features, self.nb_classes), "wrong weights"
+        assert self.biases is not None and self.biases.shape == (self.nb_classes, 1), "wrong biases"
         if training:
             assert self.class_col in columns, f"'{self.class_col}' not in data"
             assert self.nb_classes == len(data[self.class_col].unique()), "wrong nb_class"
+            assert self.enum_by_name is not None, "no enum stored"
             for data_class in data[self.class_col].unique():
                 assert self.enum_by_name.get(data_class, False), "Unknown data_class"
         
