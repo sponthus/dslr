@@ -4,8 +4,13 @@ __pycache__/
 *$py.class
 
 # Data
+datasets
 *.csv
 *.tgz
+
+# Models
+models
+models/*
 
 # C extensions
 *.so
