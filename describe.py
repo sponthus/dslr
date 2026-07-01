@@ -5,7 +5,7 @@ import argparse
 from utils import Percentiles, ft_percentiles, ft_count, ft_mean, ft_deviation, ft_trimean
 
 
-def describe(data: pd.DataFrame):
+def describe(data: pd.DataFrame) -> pd.DataFrame:
     """Describe the basic statistics of a pandas DataFrame"""
     numeric_col = [col for col in data.columns if data[col].dtype == float]
     statistics = []
@@ -36,7 +36,7 @@ def describe(data: pd.DataFrame):
     statistics_df = pd.DataFrame(statistics)
     statistics_df = statistics_df.set_index("Name")
     statistics_df = statistics_df.T
-    print(statistics_df)
+    return statistics_df
 
 
 def main():
@@ -47,7 +47,8 @@ def main():
         sys.exit(1)
 
     try:
-        describe(args.dataset)
+        statistics_df = describe(args.dataset)
+        print(statistics_df)
     except AssertionError as e:
         print(e)
         sys.exit(1)
