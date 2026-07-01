@@ -8,6 +8,7 @@ from datetime import datetime
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from utils import standardise_data
+from describe import describe
 import matplotlib.pyplot as plt
 
 # To think about: Use of a config file for:
@@ -20,6 +21,7 @@ class Logreg():
     def __init__(
             self,
             enum_by_name: dict | None = None,
+            trimeans: dict | None = None,
             nb_classes = 0,
             nb_features = 0,
             class_col: str | None = None,
@@ -30,6 +32,7 @@ class Logreg():
 
         # Remove the saved dataframe?
         self.enum_by_name: dict | None = enum_by_name
+        self.trimeans: dict | None = trimeans
         self.nb_classes = nb_classes
         self.nb_features = nb_features
         self.class_col: str | None = class_col
@@ -37,6 +40,7 @@ class Logreg():
         self.weights: np.ndarray | None = weights
         self.biases: np.ndarray | None = biases
 
+    # TODO: Add check of json content
     @classmethod
     def from_file(cls, model_path: Path) -> Logreg:
         if not model_path.exists():
@@ -55,6 +59,7 @@ class Logreg():
 
         model = Logreg(
             data["class_enum"],
+            data["trimeans"],
             data["nb_classes"],
             data["nb_features"],
             data["class_col"],
@@ -68,7 +73,7 @@ class Logreg():
     #### CONDITIONS
 
     def is_init(self) -> bool:
-        if self.enum_by_name is None or self.nb_classes == 0 or self.nb_features == 0 or self.class_col is None or self.features_cols is None or self.weights is None or self.biases is None:
+        if self.enum_by_name is None or self.trimeans is None or self.nb_classes == 0 or self.nb_features == 0 or self.class_col is None or self.features_cols is None or self.weights is None or self.biases is None:
             return False
         return True
 
@@ -84,8 +89,10 @@ class Logreg():
             assert self.class_col in columns, f"'{self.class_col}' not in data"
             assert self.nb_classes == len(data[self.class_col].unique()), "wrong nb_class"
             assert self.enum_by_name is not None, "no enum stored"
+            assert self.trimeans is not None, "no trimeans stored"
             for data_class in data[self.class_col].unique():
                 assert self.enum_by_name.get(data_class, False), "Unknown data_class"
+                assert self.trimeans.get(data_class, False), "No trimean for data_class"
         
         return True
 
@@ -106,6 +113,10 @@ class Logreg():
         self.biases = np.zeros((self.nb_classes, 1))
         self.enum_by_name = {
             name: i for i, name in enumerate(classes)
+        }
+        statistics_df = describe(data[features_cols])
+        self.trimeans = {
+            name: statistics_df.loc["Trimean", name] for name in features_cols
         }
 
     #### USAGE
@@ -275,6 +286,7 @@ class Logreg():
             "nb_classes": self.nb_classes,
             "nb_features": self.nb_features,
             "class_col": self.class_col,
+            "trimeans": self.trimeans,
             "features_cols": self.features_cols,
             "weights": self.weights.tolist(),
             "biases": self.biases.tolist(),
