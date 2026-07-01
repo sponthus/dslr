@@ -1,6 +1,7 @@
 from __future__ import annotations
 import os
 import json
+from tqdm import tqdm
 import numpy as np
 import pandas as pd
 from pathlib import Path
@@ -127,7 +128,8 @@ class Logreg():
             nb_cycles: int,
             learning_rate: float,
             class_col: str,
-            features_cols: list[str]
+            features_cols: list[str],
+            batch_size: int
             ):
 
         # Check if model already trained on a specific data
@@ -159,6 +161,11 @@ class Logreg():
             stratify=data[class_col],
             shuffle=True
         )
+        if batch_size > len(training_data):
+            print(f"Warning: required batch-size is higher than training data length, clamped it to training data length (batch gradient-descent)")
+            batch_size = len(training_data)
+        elif batch_size == 0:
+            batch_size = len(training_data)
         # print(f"{training_data=}\n{validator_data=}")
 
         print(f"{self.features_cols} / {self.class_col}")
@@ -175,10 +182,29 @@ class Logreg():
 
         losses = []
         scores = []
-        for cycle in range(nb_cycles):
-            logloss, score = self._epoch(x, y, learning_rate)
-            losses.append(logloss)
-            scores.append(score)
+        # print(f"Shape before shuffle: {x.shape=} / {y.shape}")
+        size = len(training_data)
+        factor = size / batch_size
+        for cycle in tqdm(range(nb_cycles)):
+            shuffled_indices = np.random.permutation(size)
+            # print(f"{shuffled_indices=}")
+            x_shuffled, y_shuffled = x[shuffled_indices], y[:, shuffled_indices]
+            # print(f"{x_shuffled=}, {y_shuffled=}")
+            # print(f"Shape after shuffle: {x_shuffled.shape=} / {y_shuffled.shape}")
+            epoch_loss = 0
+            epoch_score = 0
+            for i in range(0, size, batch_size):
+                x_batch = x_shuffled[i:i + batch_size]
+                y_batch = y_shuffled[:, i:i + batch_size]
+                # print(f"{x_batch=} / {y_batch=}")
+                logloss, score = self._epoch(x_batch, y_batch, learning_rate)
+                epoch_loss += logloss
+                epoch_score += score
+            epoch_loss /= factor
+            epoch_score /= factor
+            losses.append(epoch_loss)
+            scores.append(epoch_score)
+            # print(f"{cycle=} done")
             
             # print(f"{self.weights}")
         self.plot(losses, name="Losses through training")

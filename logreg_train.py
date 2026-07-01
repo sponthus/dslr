@@ -5,7 +5,7 @@ from parsing import parse_logreg_train_args
 from logreg import Logreg
 
 
-def logreg_train(data: pd.DataFrame) -> None:
+def logreg_train(data: pd.DataFrame, batch_size: int) -> None:
     chosen_cols = [
         "Muggle Studies",
         "History of Magic", "Transfiguration",
@@ -15,7 +15,7 @@ def logreg_train(data: pd.DataFrame) -> None:
     class_col = "Hogwarts House"
     # print(data)
     test = Logreg()
-    test.train(data, nb_cycles=1000, learning_rate=0.01, class_col=class_col, features_cols=chosen_cols)
+    test.train(data, nb_cycles=500, learning_rate=0.00005, class_col=class_col, features_cols=chosen_cols, batch_size=batch_size)
 
     test.save_weights()
 
@@ -27,7 +27,7 @@ def main():
         sys.exit(1)
 
     try:
-        logreg_train(args.dataset)
+        logreg_train(args.dataset, args.batch_size)
     except AssertionError as e:
         print(e)
         sys.exit(1)

@@ -4,6 +4,16 @@ from utils import get_data
 import typing as tp
 
 
+def strictly_positive_int(value) -> int:
+    try:
+        i_value = int(value)
+    except Exception:
+        raise argparse.ArgumentTypeError(f"{value} should be an integer")
+    if i_value <= 0:
+        raise argparse.ArgumentTypeError(f"{value} should be a positive value")
+    return i_value
+
+
 class ValidateCsv(argparse.Action):
     def __call__(self,
                  parser: argparse.ArgumentParser,
@@ -76,6 +86,14 @@ def parse_logreg_train_args() -> argparse.Namespace:
                     "logistic regression method"
     )
     add_csv_dataset_argument(parser)
+
+    parser.add_argument(
+        "--batch-size",
+        type=strictly_positive_int,
+        default=0,
+        help="Use mini-batch GD, or stochastic GD if batch-size=1, by default uses batch GD"
+    )
+
     return parser.parse_args()
 
 def parse_predictor_args() -> argparse.Namespace:
