@@ -99,7 +99,7 @@ class Logreg():
         try:
             with open(model_path, 'r') as f:
                 json_str:str = f.read()
-            with open("logreg_schema.json", "r", encoding="utf-8") as f:
+            with open("utils/logreg_schema.json", "r", encoding="utf-8") as f:
                 schema = json.load(f)
             data: dict = json.loads(json_str)
         except json.JSONDecodeError as e:
@@ -136,23 +136,29 @@ class Logreg():
             return False
         return True
 
-    def is_compatible(self, data: pd.DataFrame, training: bool):
+    def is_compatible(self, data: pd.DataFrame):
         """Checks if a dataset is compatible with the class initialization
         and the class attributes validity."""
+        if self.enum_by_name is None:
+            raise ValueError("no enum stored in model")
+        if self.trimeans is None:
+            raise ValueError("no trimeans stored in model")
         columns = data.columns
-        assert self.features_cols is not None and all(feature in columns for feature in self.features_cols), "not all features in data"
-        assert self.nb_features == len(self.features_cols), "wrong nb_features"
-        assert self.weights is not None and self.weights.shape == (self.nb_features, self.nb_classes), "wrong weights"
-        assert self.biases is not None and self.biases.shape == (self.nb_classes, 1), "wrong biases"
-        if training:
-            assert self.class_col in columns, f"'{self.class_col}' not in data"
-            assert self.nb_classes == len(data[self.class_col].unique()), "wrong nb_class"
-            assert self.enum_by_name is not None, "no enum stored"
-            assert self.trimeans is not None, "no trimeans stored"
-            for data_class in data[self.class_col].unique():
-                assert self.enum_by_name.get(data_class, False), "Unknown data_class"
-                assert self.trimeans.get(data_class, False), "No trimean for data_class"
-        
+        if self.features_cols is None or not all(feature in columns for feature in self.features_cols):
+            raise ValueError("not all model features in data")
+        for feature in self.features_cols:
+            if feature not in self.trimeans.keys():
+                raise ValueError(f"{feature} feature not stored in model trimean")
+        if not self.nb_classes == len(self.enum_by_name):
+            raise ValueError(f"wrong nb_classes stored in model")
+        if not self.class_col:
+            raise ValueError("no class_col in model")
+        if not self.nb_features == len(self.features_cols):
+            raise ValueError("wrong nb_features in model")
+        if self.weights is None or not self.weights.shape == (self.nb_features, self.nb_classes):
+            raise ValueError("wrong weights in model")
+        if self.biases is None or not self.biases.shape == (self.nb_classes, 1):
+            raise ValueError("wrong biases in model")
         return True
 
     #### INITIALIZATION
@@ -189,15 +195,16 @@ class Logreg():
             features_cols: list[str],
             batch_size: int
             ):
+        """
+        Initializes and trains a Logreg model from dataset.
+        Logreg class must not be already trained to call this function.
+        """
 
-        # Check if model already trained on a specific data
-        # + compatibility with known class_col and nb_features
-        # Or determine self.class_col / self.features 
-        # Store enum if not already present
+        # Check if model already trained
         if self.is_init():
-            if not self.is_compatible(data, training=True):
-                raise Exception()
+            raise ValueError("model is already initialized")
         else:
+            # Determine self.class_col / self.features
             self.initialize(
                 data=data, 
                 features_cols=features_cols, 
@@ -297,7 +304,7 @@ class Logreg():
     def predictor(self, data: pd.DataFrame, drop_na: bool = True) -> None:
         """Used to predict values from a trained model"""
         assert self.is_init(), "not initialized"
-        assert self.is_compatible(data, training=False), "model training is not compatible with data"
+        assert self.is_compatible(data), "model training is not compatible with data"
 
         columns = ["Index"]
         columns.extend(self.features_cols)
