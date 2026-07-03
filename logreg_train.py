@@ -16,7 +16,7 @@ def logreg_train(data: pd.DataFrame, batch_size: int) -> None:
     class_col = "Hogwarts House"
     # print(data)
     test = Logreg()
-    test.train(data, nb_cycles=500, learning_rate=0.00005, class_col=class_col, features_cols=chosen_cols, batch_size=batch_size)
+    test.train(data, nb_cycles=500, learning_rate=0.01, class_col=class_col, features_cols=chosen_cols, batch_size=batch_size)
 
     test.save_weights()
 
@@ -33,7 +33,8 @@ def main():
         print(e)
         sys.exit(1)
     except Exception as e:
-        print(f"Unexpected error: describe(): {e}")
+        print(f"Unexpected error: {e}")
+        raise e
         sys.exit(1)
 
 
