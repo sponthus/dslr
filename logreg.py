@@ -186,6 +186,38 @@ class Logreg():
 
     #### USAGE
 
+    def _check_batch_size(
+            self, 
+            batch_size: int, 
+            training_data: pd.DataFrame
+            ) -> int:
+        if batch_size > len(training_data):
+            print(f"Warning: required batch-size is higher than training data length, clamped it to training data length (batch gradient-descent)")
+            batch_size = len(training_data)
+        elif batch_size == 0:
+            batch_size = len(training_data)
+        return batch_size
+        
+    def _preprocessing(
+            self, 
+            data: pd.DataFrame
+            ) -> tuple[pd.DataFrame, pd.DataFrame]:
+        all_cols = self.features_cols + [self.class_col]
+        data = data[all_cols]
+        data = data.dropna(axis=0)
+        if data.empty:
+            raise ValueError("data contains nan only")
+        data = standardise_data(data)
+        print(self.enum_by_name)
+        data[self.class_col] = data[self.class_col].map(self.enum_by_name)
+        training_data, validator_data = train_test_split(
+            data,
+            test_size=0.25,
+            stratify=data[self.class_col],
+            shuffle=True
+        )
+        return training_data, validator_data
+
     def train(
             self,
             data: pd.DataFrame,
@@ -199,41 +231,19 @@ class Logreg():
         Initializes and trains a Logreg model from dataset.
         Logreg class must not be already trained to call this function.
         """
-
         # Check if model already trained
         if self.is_init():
             raise ValueError("model is already initialized")
         else:
-            # Determine self.class_col / self.features
-            self.initialize(
-                data=data, 
-                features_cols=features_cols, 
-                class_col=class_col
-            )
+            self.initialize(data, features_cols, class_col)
 
         # TODO: Evaluate if it is better to shuffle the data
         # at each cycle to avoid overfitting
-        # + factorize as preprocessing()
-        all_cols = features_cols + [class_col]
-        data = data[all_cols]
-        data = data.dropna(axis=0)
-        assert not data.empty, "data contains nan only"
-        data = standardise_data(data)
-        data.loc[:, class_col] = data[class_col].map(self.enum_by_name)
-        training_data, validator_data = train_test_split(
-            data,
-            test_size=0.25,
-            stratify=data[class_col],
-            shuffle=True
-        )
-        if batch_size > len(training_data):
-            print(f"Warning: required batch-size is higher than training data length, clamped it to training data length (batch gradient-descent)")
-            batch_size = len(training_data)
-        elif batch_size == 0:
-            batch_size = len(training_data)
+        training_data, validator_data = self._preprocessing(data)
+        batch_size = self._check_batch_size(batch_size, training_data)
         # print(f"{training_data=}\n{validator_data=}")
+        # print(f"{self.features_cols} / {self.class_col}")
 
-        print(f"{self.features_cols} / {self.class_col}")
         # X = features values for each feature and sample
         x = np.array(training_data[self.features_cols])
         # Y = Expected class probability for each sample
