@@ -21,10 +21,10 @@ class Logreg():
 
     def __init__(
             self,
-            enum_by_name: dict | None = None,
-            trimeans: dict | None = None,
-            nb_classes = 0,
-            nb_features = 0,
+            enum_by_name: dict[str, int] | None = None,
+            trimeans: dict[str, float] | None = None,
+            nb_classes: int = 0,
+            nb_features: int = 0,
             class_col: str | None = None,
             features_cols: list[str] | None = None,
             weights: np.ndarray | None = None,
@@ -41,6 +41,57 @@ class Logreg():
         self.weights: np.ndarray | None = weights
         self.biases: np.ndarray | None = biases
 
+        arguments: list = [enum_by_name, trimeans, class_col, features_cols, weights, biases]
+        # If any argument is not None, check the coherence of given parameters
+        if any(arg is not None for arg in arguments):
+            self._check_parameters()
+
+    def _check_parameters(self):
+        # Check types
+        if not isinstance(self.nb_classes, int):
+            raise TypeError("Invalid nb_classes type")
+        if not isinstance(self.nb_features, int):
+            raise TypeError("Invalid nb_features type")
+        if not isinstance(self.features_cols, list):
+            raise TypeError("Invalid features_cols type")
+        if not isinstance(self.class_col, str):
+            raise TypeError("Invalid class_col type")
+
+        if not isinstance(self.enum_by_name, dict):
+            raise TypeError("Invalid class_enum type")
+        if not all(isinstance(key, str) for key in self.enum_by_name.keys()):
+            raise TypeError("Invalid enum_by_name keys type")
+        if not all(isinstance(v, int) for v in self.enum_by_name.values()):
+            raise TypeError("Invalid enum_by_name values type")
+        
+        if not all(isinstance(col, str) for col in self.features_cols):
+            raise TypeError("Invalid features_cols type")
+        if not isinstance(self.weights, np.ndarray):
+            raise TypeError("Invalid weights type")
+        if not isinstance(self.biases, np.ndarray):
+            raise TypeError("Invalid biases type")
+
+        if not isinstance(self.trimeans, dict):
+            raise TypeError("Invalid trimeans type")
+        if not all(isinstance(key, str) for key in self.trimeans.keys()):
+            raise TypeError("Invalid trimeans keys type")
+        if not all(isinstance(v, float) for v in self.trimeans.values()):
+            raise TypeError("Invalid trimeans values type")
+        
+        # Check consistency
+        if not len(self.enum_by_name.keys()) == self.nb_classes:
+            raise ValueError("No correspondance between enum_by_name and nb_classes")
+        if not len(self.features_cols) == self.nb_features:
+            raise ValueError("Invalid nb_features")
+        if not len(self.trimeans.keys()) == self.nb_features:
+            raise ValueError("Invalid trimeans")
+
+        # Check shapes
+        if not self.weights.shape == (self.nb_features, self.nb_classes):
+            raise ValueError("Invalid weights shape")
+        if not self.biases.shape == (self.nb_classes, 1):
+            raise ValueError("Invalid biases shape")
+
     # TODO: Add check of json content
     @classmethod
     def from_file(cls, model_path: Path) -> Logreg:
@@ -54,7 +105,20 @@ class Logreg():
             json_str:str = f.read()
         
         data: dict = json.loads(json_str)
-    
+
+        required_keys = {
+            "class_enum": dict[str, int],
+            "trimeans": dict[str, float],
+            "nb_classes": int,
+            "nb_features": int,
+            "class_col": str,
+            "features_cols": list[str],
+            "weights": list[list[float]],
+            "biases": list[list[float]]
+        }
+
+        if not all(key in data for key in required_keys):
+            raise AssertionError(f"Incomplete model")
         # print(data)
         # print(type(data["class_enum"]))
 
