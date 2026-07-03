@@ -1,6 +1,8 @@
 from __future__ import annotations
 import os
 import json
+from jsonschema import validate
+from jsonschema.exceptions import ValidationError, SchemaError
 from tqdm import tqdm
 import numpy as np
 import pandas as pd
@@ -92,35 +94,27 @@ class Logreg():
         if not self.biases.shape == (self.nb_classes, 1):
             raise ValueError("Invalid biases shape")
 
-    # TODO: Add check of json content
     @classmethod
     def from_file(cls, model_path: Path) -> Logreg:
-        if not model_path.exists():
-            raise FileNotFoundError(f"The file '{model_path}' does not exist.")
+        try:
+            with open(model_path, 'r') as f:
+                json_str:str = f.read()
+            with open("logreg_schema.json", "r", encoding="utf-8") as f:
+                schema = json.load(f)
+            data: dict = json.loads(json_str)
+        except json.JSONDecodeError as e:
+            raise TypeError(f"Wrong json format: {e}")
+        except Exception as e:
+            raise e
 
-        if not model_path.is_file():
-            raise FileNotFoundError(f"The path '{model_path}' is not a file.")
-        
-        with open(model_path, 'r') as f:
-            json_str:str = f.read()
-        
-        data: dict = json.loads(json_str)
-
-        required_keys = {
-            "class_enum": dict[str, int],
-            "trimeans": dict[str, float],
-            "nb_classes": int,
-            "nb_features": int,
-            "class_col": str,
-            "features_cols": list[str],
-            "weights": list[list[float]],
-            "biases": list[list[float]]
-        }
-
-        if not all(key in data for key in required_keys):
-            raise AssertionError(f"Incomplete model")
-        # print(data)
-        # print(type(data["class_enum"]))
+        try:
+            validate(instance=data, schema=schema)
+        except ValidationError as ve:
+            raise ValueError(f"Validation error: {ve.message}")
+        except SchemaError as se:
+            raise ValueError(f"Schema error: {se.message}")
+        except Exception as e:
+            raise RuntimeError(e)
 
         model = Logreg(
             data["class_enum"],

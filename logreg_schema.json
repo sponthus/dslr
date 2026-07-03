@@ -1,20 +1,15 @@
-import json
-import jsonschema
-from jsonschema import validate
-from pathlib import Path
-
-MODEL_SCHEMA = {
+{
     "type": "object",
     "properties": {
         "class_enum": {
             "type": "object",
             "patternProperties": {
                 "^.*$": {
-                    "type": "integer",
+                    "type": "integer"
                 }
             },
-            "additionalProperties": False
-        },
+            "additionalProperties": false
+        }
     },
     "nb_classes": {
         "type": "integer"
@@ -67,19 +62,3 @@ MODEL_SCHEMA = {
     ],
     "$schema": "https://json-schema.org/draft/2020-12/schema"
 }
-
-def validate_json(file: Path) -> None:
-    try:
-        with open(file) as f:
-            my_json = json.load(f)
-
-        validate(instance=my_json, schema=MODEL_SCHEMA)
-
-    except jsonschema.exceptions.ValidationError as ve:
-        print(f"Validation error: {ve.message}")
-
-    except jsonschema.exceptions.SchemaError as se:
-        print(f"Schema error: {se.message}")
-
-    except Exception as e:
-        print(f"Error: {e}")
