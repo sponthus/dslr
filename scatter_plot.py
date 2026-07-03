@@ -2,8 +2,8 @@ import sys
 import argparse
 import pandas as pd
 import matplotlib.pyplot as plt
-from utils import COLORS_HOUSES
-from parsing import parse_scatter_args
+from utils.utils import COLORS_HOUSES
+from utils.parsing import parse_scatter_args
 
 
 def scatter_plot(data: pd.DataFrame, feature_a: str, feature_b: str) -> None:

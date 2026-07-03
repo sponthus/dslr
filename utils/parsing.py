@@ -1,6 +1,6 @@
 import argparse
 from pathlib import Path
-from utils import get_data
+from utils.utils import get_data
 import typing as tp
 
 

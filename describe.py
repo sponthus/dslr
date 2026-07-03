@@ -1,8 +1,8 @@
 import sys
 import pandas as pd
-from parsing import parse_describe_args
+from utils.parsing import parse_describe_args
 import argparse
-from utils import Percentiles, ft_percentiles, ft_count, ft_mean, ft_deviation, ft_trimean
+from utils.utils import Percentiles, ft_percentiles, ft_count, ft_mean, ft_deviation, ft_trimean
 
 
 def describe(data: pd.DataFrame) -> pd.DataFrame:

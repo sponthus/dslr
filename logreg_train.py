@@ -1,10 +1,11 @@
 import sys
 import pandas as pd
 import argparse
-from parsing import parse_logreg_train_args
+from utils.parsing import parse_logreg_train_args
 from logreg import Logreg
 
 
+# TODO: Check if every exception is correctly catched
 def logreg_train(data: pd.DataFrame, batch_size: int) -> None:
     chosen_cols = [
         "Muggle Studies",

@@ -10,7 +10,7 @@ from pathlib import Path
 from datetime import datetime
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from utils import standardise_data
+from utils.utils import standardise_data
 from describe import describe
 import matplotlib.pyplot as plt
 

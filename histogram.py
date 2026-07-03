@@ -2,8 +2,8 @@ import sys
 import argparse
 import pandas as pd
 import matplotlib.pyplot as plt
-from utils import COLORS_HOUSES
-from parsing import parse_hist_args
+from utils.utils import COLORS_HOUSES
+from utils.parsing import parse_hist_args
 
 
 def histogram(data: pd.DataFrame) -> None:
