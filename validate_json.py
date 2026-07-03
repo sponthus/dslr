@@ -4,75 +4,68 @@ from jsonschema import validate
 from pathlib import Path
 
 MODEL_SCHEMA = {
-  "type": "object",
-  "properties": {
-    "class_enum": {
-      "type": "object",
-      "properties": {
-        "Ravenclaw": {
-          "type": "integer"
+    "type": "object",
+    "properties": {
+        "class_enum": {
+            "type": "object",
+            "patternProperties": {
+                "^.*$": {
+                    "type": "integer",
+                }
+            },
+            "additionalProperties": False
         },
-        "Slytherin": {
-          "type": "integer"
-        },
-        "Gryffindor": {
-          "type": "integer"
-        },
-        "Hufflepuff": {
-          "type": "integer"
-        }
-      },
-      "required": [
-        "Ravenclaw",
-        "Slytherin",
-        "Gryffindor",
-        "Hufflepuff"
-      ]
     },
     "nb_classes": {
-      "type": "integer"
+        "type": "integer"
     },
     "nb_features": {
-      "type": "integer"
+        "type": "integer"
     },
     "class_col": {
-      "type": "string"
+        "type": "string"
+    },
+    "trimeans": {
+        "type": "array",
+        "items": {
+            "type": "number"
+        }
     },
     "features_cols": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
+        "type": "array",
+        "items": {
+            "type": "string"
+        }
     },
     "weights": {
-      "type": "array",
-      "items": {
         "type": "array",
         "items": {
-          "type": "number"
+            "type": "array",
+            "items": {
+                "type": "number"
+            }
         }
-      }
     },
     "biases": {
-      "type": "array",
-      "items": {
         "type": "array",
         "items": {
-          "type": "number"
+            "type": "array",
+            "items": {
+                "type": "number"
+            }
         }
-      }
-    }
-  },
-  "required": [
-    "class_enum",
-    "nb_classes",
-    "nb_features",
-    "class_col",
-    "features_cols",
-    "weights",
-    "biases"
-  ],
-  "$schema": "https://json-schema.org/draft/2020-12/schema"
+    },
+    "required": [
+        "class_enum",
+        "nb_classes",
+        "nb_features",
+        "class_col",
+        "trimeans",
+        "features_cols",
+        "weights",
+        "biases"
+    ],
+    "$schema": "https://json-schema.org/draft/2020-12/schema"
 }
 
 def validate_json(file: Path) -> None:
