@@ -48,7 +48,15 @@ def parse_describe_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="A simple program to visualise dataset's basic statistic"
     )
+
     add_csv_dataset_argument(parser)
+
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Prints relevant informations about the prediction process"
+    )
+
     return parser.parse_args()
 
 
@@ -57,7 +65,14 @@ def parse_pair_plot_args() -> argparse.Namespace:
         description="A simple program to visualise dataset's chosen features \
             in a paired-plot"
     )
+
     add_csv_dataset_argument(parser)
+
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Prints relevant informations about the paired-plot process"
+    )
     return parser.parse_args()
 
 
@@ -66,7 +81,14 @@ def parse_scatter_args() -> argparse.Namespace:
         description="A simple program to visualise dataset's similar features \
             in a scatterplot"
     )
+
     add_csv_dataset_argument(parser)
+
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Prints relevant informations about the scatterplot process"
+    )
 
     return parser.parse_args()
 
@@ -76,7 +98,15 @@ def parse_hist_args() -> argparse.Namespace:
         description="A simple program to visualise dataset's features \
             in a histogram"
     )
+
     add_csv_dataset_argument(parser)
+
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Prints relevant informations about the histogram process"
+    )
+
     return parser.parse_args()
 
 
@@ -92,6 +122,12 @@ def parse_logreg_train_args() -> argparse.Namespace:
         type=strictly_positive_int,
         default=0,
         help="Use mini-batch GD, or stochastic GD if batch-size=1, by default uses batch GD"
+    )
+
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Prints relevant informations about the training process"
     )
 
     return parser.parse_args()
@@ -113,6 +149,12 @@ def parse_predictor_args() -> argparse.Namespace:
         "--drop-na",
         action="store_true",
         help="If missing feature data, drops it instead of replacing it with known trimean"
+    )
+
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Prints relevant informations about the prediction process"
     )
 
     return parser.parse_args()
