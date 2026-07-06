@@ -12,6 +12,14 @@ COLORS_HOUSES = {
 }
 
 
+def print_log(msg: str, verbose: bool = True) -> None:
+    """
+    Prints msg on standard output if verbose = True
+    """
+    if verbose:
+        print(msg)
+
+
 class Percentiles(tp.NamedTuple):
     """A named tuple to hold the percentiles of a dataset"""
     min: float
