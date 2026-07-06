@@ -65,8 +65,13 @@ def ft_count(data: pd.Series) -> int:
 
 
 def ft_trimean(percentiles: Percentiles) -> float:
-    """Trimean or Tukey's trimean, weighted average of distribution quartiles"""
-    trimean: float = (percentiles.quartile_25 + 2 * percentiles.quartile_50 + percentiles.quartile_75) / 4
+    """Trimean or Tukey's trimean, weighted average
+    of distribution quartiles"""
+    trimean: float = (
+        percentiles.quartile_25
+        + 2 * percentiles.quartile_50
+        + percentiles.quartile_75
+        ) / 4
     return trimean
 
 
@@ -117,8 +122,10 @@ def standardise_data(df: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
     """Standardise the numerical columns of a DataFrame"""
     for column in df.columns:
         if df.dtypes[column] not in [float, int]:
-            print_log(f"Standardisation: column `{column}` " +
-                  f"of type `{df.dtypes[column]}` skiped", verbose)
+            print_log(
+                f"Standardisation: column `{column}` " +
+                f"of type `{df.dtypes[column]}` skiped", verbose
+            )
             continue
 
         count: int = ft_count(df[column])

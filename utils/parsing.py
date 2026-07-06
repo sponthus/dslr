@@ -14,7 +14,10 @@ def strictly_positive_int(value) -> int:
     return i_value
 
 
-def add_verbose_argument(parser: argparse.ArgumentParser, program: str) -> None:
+def add_verbose_argument(
+        parser: argparse.ArgumentParser,
+        program: str
+        ) -> None:
     parser.add_argument(
         "-v", "--verbose",
         action="store_true",
@@ -130,7 +133,7 @@ def parse_predictor_args() -> argparse.Namespace:
                     "logistic regression method"
     )
     add_csv_dataset_argument(parser)
-    
+
     parser.add_argument(
         "model",
         type=Path,
