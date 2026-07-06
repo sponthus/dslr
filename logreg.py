@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 #   - chosen features
 #   - training parameters (cyles, learning rate)
 
+
 class Logreg():
 
     def __init__(
@@ -45,11 +46,18 @@ class Logreg():
         self.biases: np.ndarray | None = biases
         self.verbose = verbose
 
-        arguments: list = [enum_by_name, trimeans, class_col, features_cols, weights, biases]
+        arguments: list = [
+            enum_by_name,
+            trimeans,
+            class_col,
+            features_cols,
+            weights,
+            biases
+            ]
         # If any argument is not None, check the coherence of given parameters
         if any(arg is not None for arg in arguments):
             self._check_parameters()
-        print_log(f"Logreg class created", self.verbose)
+        print_log("Logreg class created", self.verbose)
 
     def _check_parameters(self):
         # Check types
@@ -68,7 +76,7 @@ class Logreg():
             raise TypeError("Invalid enum_by_name keys type")
         if not all(isinstance(v, int) for v in self.enum_by_name.values()):
             raise TypeError("Invalid enum_by_name values type")
-        
+
         if not all(isinstance(col, str) for col in self.features_cols):
             raise TypeError("Invalid features_cols type")
         if not isinstance(self.weights, np.ndarray):
@@ -82,10 +90,12 @@ class Logreg():
             raise TypeError("Invalid trimeans keys type")
         if not all(isinstance(v, float) for v in self.trimeans.values()):
             raise TypeError("Invalid trimeans values type")
-        
+
         # Check consistency
         if not len(self.enum_by_name.keys()) == self.nb_classes:
-            raise ValueError("No correspondance between enum_by_name and nb_classes")
+            raise ValueError(
+                "No correspondance between enum_by_name and nb_classes"
+                )
         if not len(self.features_cols) == self.nb_features:
             raise ValueError("Invalid nb_features")
         if not len(self.trimeans.keys()) == self.nb_features:
@@ -101,7 +111,7 @@ class Logreg():
     def from_file(cls, verbose: bool, model_path: Path) -> Logreg:
         try:
             with open(model_path, 'r') as f:
-                json_str:str = f.read()
+                json_str: str = f.read()
             with open("utils/logreg_schema.json", "r", encoding="utf-8") as f:
                 schema = json.load(f)
             data: dict = json.loads(json_str)
@@ -149,11 +159,16 @@ class Logreg():
         base += f"\n{self.biases=}"
         return base
 
-
-    #### CONDITIONS
-
+    # CONDITIONS
     def is_init(self) -> bool:
-        if self.enum_by_name is None or self.trimeans is None or self.nb_classes == 0 or self.nb_features == 0 or self.class_col is None or self.features_cols is None or self.weights is None or self.biases is None:
+        if self.enum_by_name is None \
+           or self.trimeans is None \
+           or self.nb_classes == 0 \
+           or self.nb_features == 0 \
+           or self.class_col is None \
+           or self.features_cols is None \
+           or self.weights is None \
+           or self.biases is None:
             return False
         return True
 
@@ -165,27 +180,38 @@ class Logreg():
         if self.trimeans is None:
             raise ValueError("no trimeans stored in model")
         columns = data.columns
-        if self.features_cols is None or not all(feature in columns for feature in self.features_cols):
+        if self.features_cols is None \
+           or not all(feature in columns for feature in self.features_cols):
             raise ValueError("not all model features in data")
         for feature in self.features_cols:
             if feature not in self.trimeans.keys():
-                raise ValueError(f"{feature} feature not stored in model trimean")
+                raise ValueError(
+                    f"{feature} feature not stored in model trimean"
+                    )
         if not self.nb_classes == len(self.enum_by_name):
-            raise ValueError(f"wrong nb_classes stored in model")
+            raise ValueError("wrong nb_classes stored in model")
         if not self.class_col:
             raise ValueError("no class_col in model")
         if not self.nb_features == len(self.features_cols):
             raise ValueError("wrong nb_features in model")
-        if self.weights is None or not self.weights.shape == (self.nb_features, self.nb_classes):
+        if self.weights is None \
+           or not self.weights.shape == (self.nb_features, self.nb_classes):
             raise ValueError("wrong weights in model")
-        if self.biases is None or not self.biases.shape == (self.nb_classes, 1):
+        if self.biases is None \
+           or not self.biases.shape == (self.nb_classes, 1):
             raise ValueError("wrong biases in model")
         return True
 
-    #### INITIALIZATION
+    # INITIALIZATION
 
-    def initialize(self, data: pd.DataFrame, features_cols: list[str], class_col: str):
-        """Initializes features_cols, class_col, enum, weights and biases for the class"""
+    def initialize(
+            self,
+            data: pd.DataFrame,
+            features_cols: list[str],
+            class_col: str
+            ):
+        """Initializes features_cols, class_col, enum,
+        weights and biases for the class"""
         self.features_cols = features_cols
         self.class_col = class_col
         classes = data[class_col].unique()
@@ -206,23 +232,27 @@ class Logreg():
         }
         print_log(f"Initialized logreg from dataset: {self}", self.verbose)
 
-    #### USAGE
+    # USAGE
 
     def _check_batch_size(
-            self, 
-            batch_size: int, 
+            self,
+            batch_size: int,
             training_data: pd.DataFrame
             ) -> int:
         if batch_size > len(training_data):
-            print(f"Warning: required batch-size is higher than training data length, clamped it to training data length (batch gradient-descent)")
+            print(
+                "Warning: required batch-size is higher than training "
+                "data length, clamped it to training data length "
+                "(batch gradient-descent)"
+                )
             batch_size = len(training_data)
         elif batch_size == 0:
             batch_size = len(training_data)
         print_log(f"Using {batch_size=}", self.verbose)
         return batch_size
-        
+
     def _preprocessing(
-            self, 
+            self,
             data: pd.DataFrame
             ) -> tuple[pd.DataFrame, pd.DataFrame]:
         all_cols = self.features_cols + [self.class_col]
@@ -238,8 +268,11 @@ class Logreg():
             stratify=data[self.class_col],
             shuffle=True
         )
-        print_log(f"Split data in training_data (n={len(training_data)}) " +
-                  f"and validator_data (n={len(validator_data)})", self.verbose)
+        print_log(
+            f"Split data in training_data (n={len(training_data)}) " +
+            f"and validator_data (n={len(validator_data)})",
+            self.verbose
+            )
         return training_data, validator_data
 
     def train(
@@ -280,7 +313,8 @@ class Logreg():
         factor = size / batch_size
         for cycle in tqdm(range(nb_cycles)):
             shuffled_indices = np.random.permutation(size)
-            x_shuffled, y_shuffled = x[shuffled_indices], y[:, shuffled_indices]
+            x_shuffled = x[shuffled_indices]
+            y_shuffled = y[:, shuffled_indices]
             epoch_loss = 0
             epoch_score = 0
             for i in range(0, size, batch_size):
@@ -293,7 +327,7 @@ class Logreg():
             epoch_score /= factor
             losses.append(epoch_loss)
             scores.append(epoch_score)
-            
+
         print_log(f"\nFinished training:\n{self}", self.verbose)
         self.plot(losses, name="Losses through training")
         self.plot(scores, name="Accuracy scores through training")
@@ -304,7 +338,7 @@ class Logreg():
             y_validator[class_index][i] = 1
         y_validator = np.argmax(y_validator, axis=0)
         validator_data = np.array(validator_data[self.features_cols])
-    
+
         y_pred_validator = np.argmax(self.predict(validator_data), axis=0)
         # print(f"{y_pred_validator=} / {y_validator=}\n")
         score = accuracy_score(y_true=y_validator, y_pred=y_pred_validator)
@@ -317,7 +351,10 @@ class Logreg():
 
         # For graphical representations
         logloss = self.log_loss(y, y_pred)
-        score = accuracy_score(y_true=np.argmax(y, axis=0), y_pred=np.argmax(y_pred, axis=0))
+        score = accuracy_score(
+            y_true=np.argmax(y, axis=0),
+            y_pred=np.argmax(y_pred, axis=0)
+            )
 
         self.weights = self.update(self.weights, gradient_w, learning_rate)
         self.biases = self.update(self.biases, gradient_b, learning_rate)
@@ -349,18 +386,23 @@ class Logreg():
         enum_by_id = {
             value: key for key, value in self.enum_by_name.items()
         }
-        
+
         str_results = []
         class_index = np.argmax(y_pred.T, axis=1)
         for i in range(len(x)):
             str_results.append(enum_by_id.get(class_index[i]))
 
         data[self.class_col] = str_results
-        data.to_csv("houses.csv" , sep=",", index_label="Index", columns=[self.class_col])
+        data.to_csv(
+            "houses.csv",
+            sep=",",
+            index_label="Index",
+            columns=[self.class_col]
+            )
         print_log(f"Results:\n{data[self.class_col]}", self.verbose)
         print_log("Results saved in houses.csv", True)
 
-    #### COMPUTATIONS
+    # COMPUTATIONS
     # TODO: Move every stats calculation from class into different file?
 
     def update(
@@ -385,8 +427,13 @@ class Logreg():
         res: float = -(y * np.log(y_pred)
                        + (1 - y) * np.log(1 - y_pred)).mean()
         return res
-    
-    def compute_gradient(self, x: np.ndarray, y_pred: np.ndarray, y: np.ndarray):
+
+    def compute_gradient(
+            self,
+            x: np.ndarray,
+            y_pred: np.ndarray,
+            y: np.ndarray
+            ) -> tuple[np.ndarray, np.ndarray]:
         """Uses derivative from log loss function, for gradient descent"""
         # res = ((self.y_pred - y) * x).mean()
         error = y_pred - y
@@ -402,7 +449,7 @@ class Logreg():
 
     def _replace_na(self, data: pd.DataFrame) -> pd.DataFrame:
         """Replaces nan values with known trimean for the feature
-        
+
         If all features have no data, the row is deleted"""
         df_copy: pd.DataFrame = data.copy()
         for index, row in data.iterrows():
@@ -415,15 +462,14 @@ class Logreg():
                 df_copy = df_copy.drop(index=index)
         return df_copy
 
-
-    #### LOAD AND SAVE
+    # LOAD AND SAVE
 
     def save_weights(self):
         """Save weights to a file"""
         # Use json file
         # Save used feature for training and enum
 
-        save_dict= {
+        save_dict = {
             "class_enum": self.enum_by_name,
             "nb_classes": self.nb_classes,
             "nb_features": self.nb_features,
@@ -435,7 +481,8 @@ class Logreg():
         }
 
         model_folder: str = "models"
-        model_file: str = datetime.now().strftime("DSLR_model_%Y-%m-%d_%H-%M-%S.json")
+        name_format: str = "DSLR_model_%Y-%m-%d_%H-%M-%S.json"
+        model_file: str = datetime.now().strftime(name_format)
         model_path = os.path.join(model_folder, model_file)
 
         if not os.path.exists(model_folder):
@@ -449,7 +496,7 @@ class Logreg():
         # Use json file
         pass
 
-    ### TRACK
+    # TRACK
     # TODO: Add more figure for training stats visualisation (accuracy)
 
     def plot(self, data: list, name: str):
@@ -458,7 +505,7 @@ class Logreg():
         plt.plot(data)
         plt.show()
 
-    ### DEBUG
+    # DEBUG
 
     def print_all(self):
         print(f"{self.enum_by_name=}")
