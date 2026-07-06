@@ -413,6 +413,8 @@ class Logreg():
         n = len(data)
         if drop_na:
             data = data.dropna(axis=0)
+            if data.empty:
+                raise ValueError("data contains nan only")
             if n != len(data):
                 print_log(f"Dropped {n - len(data)} lines with nan",
                           self.verbose)
