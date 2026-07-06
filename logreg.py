@@ -262,6 +262,9 @@ class Logreg():
         data = data.dropna(axis=0)
         if data.empty:
             raise ValueError("data contains nan only")
+        if n != len(data):
+            print_log(f"Dropped {n - len(data)} lines with nan",
+                      self.verbose)
         data = standardise_data(data, self.verbose)
         data[self.class_col] = data[self.class_col].map(self.class_enum)
         training_data, validator_data = train_test_split(
@@ -377,7 +380,9 @@ class Logreg():
         n = len(data)
         if drop_na:
             data = data.dropna(axis=0)
-            print_log(f"Dropped {n - len(data)} lines with nan", self.verbose)
+            if n != len(data):
+                print_log(f"Dropped {n - len(data)} lines with nan",
+                          self.verbose)
         else:
             data = self._replace_na(data)
             print_log("Replaced nan with known trimeans", self.verbose)
