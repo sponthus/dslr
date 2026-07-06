@@ -160,6 +160,7 @@ class Logreg():
         return base
 
     # CONDITIONS
+
     def is_init(self) -> bool:
         if self.class_enum is None \
            or self.trimeans is None \
