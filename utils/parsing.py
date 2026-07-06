@@ -61,7 +61,6 @@ def parse_describe_args() -> argparse.Namespace:
     )
 
     add_csv_dataset_argument(parser)
-
     add_verbose_argument(parser, "describe")
 
     return parser.parse_args()
@@ -70,16 +69,12 @@ def parse_describe_args() -> argparse.Namespace:
 def parse_pair_plot_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="A simple program to visualise dataset's chosen features \
-            in a paired-plot"
+            in a pair-plot"
     )
 
     add_csv_dataset_argument(parser)
+    add_verbose_argument(parser, "pair-plot")
 
-    parser.add_argument(
-        "-v", "--verbose",
-        action="store_true",
-        help="Prints relevant informations about the paired-plot process"
-    )
     return parser.parse_args()
 
 
@@ -90,7 +85,6 @@ def parse_scatter_args() -> argparse.Namespace:
     )
 
     add_csv_dataset_argument(parser)
-
     add_verbose_argument(parser, "scatterplot")
 
     return parser.parse_args()
@@ -103,8 +97,8 @@ def parse_hist_args() -> argparse.Namespace:
     )
 
     add_csv_dataset_argument(parser)
-
     add_verbose_argument(parser, "histogram")
+
     return parser.parse_args()
 
 
@@ -113,7 +107,9 @@ def parse_logreg_train_args() -> argparse.Namespace:
         description="A simple program to train a model with "
                     "logistic regression method"
     )
+
     add_csv_dataset_argument(parser)
+    add_verbose_argument(parser, "training")
 
     parser.add_argument(
         "--batch-size",
@@ -123,7 +119,6 @@ def parse_logreg_train_args() -> argparse.Namespace:
         " by default uses batch GD"
     )
 
-    add_verbose_argument(parser, "training")
     return parser.parse_args()
 
 
@@ -132,7 +127,9 @@ def parse_predictor_args() -> argparse.Namespace:
         description="A simple program to train a model with "
                     "logistic regression method"
     )
+
     add_csv_dataset_argument(parser)
+    add_verbose_argument(parser, "prediction")
 
     parser.add_argument(
         "model",
@@ -147,5 +144,4 @@ def parse_predictor_args() -> argparse.Namespace:
         "replacing it with known trimean"
     )
 
-    add_verbose_argument(parser, "prediction")
     return parser.parse_args()
