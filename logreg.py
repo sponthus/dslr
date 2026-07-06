@@ -10,7 +10,7 @@ from pathlib import Path
 from datetime import datetime
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from utils.utils import standardise_data
+from utils.utils import standardise_data, print_log
 from describe import describe
 import matplotlib.pyplot as plt
 
@@ -49,6 +49,7 @@ class Logreg():
         # If any argument is not None, check the coherence of given parameters
         if any(arg is not None for arg in arguments):
             self._check_parameters()
+        print_log(f"Logreg class created", self.verbose)
 
     def _check_parameters(self):
         # Check types
@@ -111,6 +112,7 @@ class Logreg():
 
         try:
             validate(instance=data, schema=schema)
+            print_log(f"Loaded model {model_path}", verbose)
         except ValidationError as ve:
             raise ValueError(f"Validation error: {ve.message}")
         except SchemaError as se:
@@ -131,6 +133,22 @@ class Logreg():
         )
 
         return model
+
+    def __str__(self) -> str:
+        base = "Logreg class"
+        initialized: bool = self.is_init()
+        if not initialized:
+            return base + "\nNot initialized"
+        base += f"\n{self.enum_by_name=}"
+        base += f"\n{self.trimeans=}"
+        base += f"\n{self.nb_classes=}"
+        base += f"\n{self.nb_features=}"
+        base += f"\n{self.class_col=}"
+        base += f"\n{self.features_cols=}"
+        base += f"\n{self.weights=}"
+        base += f"\n{self.biases=}"
+        return base
+
 
     #### CONDITIONS
 
@@ -186,6 +204,7 @@ class Logreg():
         self.trimeans = {
             name: statistics_df.loc["Trimean", name] for name in features_cols
         }
+        print_log(f"Initialized logreg from dataset: {self}", self.verbose)
 
     #### USAGE
 
@@ -199,6 +218,7 @@ class Logreg():
             batch_size = len(training_data)
         elif batch_size == 0:
             batch_size = len(training_data)
+        print_log(f"Using {batch_size=}", self.verbose)
         return batch_size
         
     def _preprocessing(
@@ -210,8 +230,7 @@ class Logreg():
         data = data.dropna(axis=0)
         if data.empty:
             raise ValueError("data contains nan only")
-        data = standardise_data(data)
-        print(self.enum_by_name)
+        data = standardise_data(data, self.verbose)
         data[self.class_col] = data[self.class_col].map(self.enum_by_name)
         training_data, validator_data = train_test_split(
             data,
@@ -219,6 +238,8 @@ class Logreg():
             stratify=data[self.class_col],
             shuffle=True
         )
+        print_log(f"Split data in training_data (n={len(training_data)}) " +
+                  f"and validator_data (n={len(validator_data)})", self.verbose)
         return training_data, validator_data
 
     def train(
@@ -244,37 +265,27 @@ class Logreg():
         # at each cycle to avoid overfitting
         training_data, validator_data = self._preprocessing(data)
         batch_size = self._check_batch_size(batch_size, training_data)
-        # print(f"{training_data=}\n{validator_data=}")
-        # print(f"{self.features_cols} / {self.class_col}")
 
         # X = features values for each feature and sample
         x = np.array(training_data[self.features_cols])
         # Y = Expected class probability for each sample
         y = np.zeros((self.nb_classes, len(training_data)))
         for i in range(len(training_data)):
-            # print(f"{training_data.iloc[i][self.class_col]=}")
             class_index = int(training_data.iloc[i][self.class_col])
-            # print(f"{class_index=}")
             y[class_index][i] = 1
-        # print(f"{y=}")
 
         losses = []
         scores = []
-        # print(f"Shape before shuffle: {x.shape=} / {y.shape}")
         size = len(training_data)
         factor = size / batch_size
         for cycle in tqdm(range(nb_cycles)):
             shuffled_indices = np.random.permutation(size)
-            # print(f"{shuffled_indices=}")
             x_shuffled, y_shuffled = x[shuffled_indices], y[:, shuffled_indices]
-            # print(f"{x_shuffled=}, {y_shuffled=}")
-            # print(f"Shape after shuffle: {x_shuffled.shape=} / {y_shuffled.shape}")
             epoch_loss = 0
             epoch_score = 0
             for i in range(0, size, batch_size):
                 x_batch = x_shuffled[i:i + batch_size]
                 y_batch = y_shuffled[:, i:i + batch_size]
-                # print(f"{x_batch=} / {y_batch=}")
                 logloss, score = self._epoch(x_batch, y_batch, learning_rate)
                 epoch_loss += logloss
                 epoch_score += score
@@ -282,11 +293,9 @@ class Logreg():
             epoch_score /= factor
             losses.append(epoch_loss)
             scores.append(epoch_score)
-            # print(f"{cycle=} done")
             
-            # print(f"{self.weights}")
+        print_log(f"\nFinished training:\n{self}", self.verbose)
         self.plot(losses, name="Losses through training")
-        # print(f"{scores=}")
         self.plot(scores, name="Accuracy scores through training")
 
         y_validator = np.zeros((self.nb_classes, len(validator_data)))
@@ -299,7 +308,7 @@ class Logreg():
         y_pred_validator = np.argmax(self.predict(validator_data), axis=0)
         # print(f"{y_pred_validator=} / {y_validator=}\n")
         score = accuracy_score(y_true=y_validator, y_pred=y_pred_validator)
-        print(f"{score=}")
+        print_log(f"Accuracy score={score*100:.3f}%", self.verbose)
 
     def _epoch(self, x: np.ndarray, y: np.ndarray, learning_rate: float):
         y_pred: np.ndarray = self.predict(x)
@@ -325,10 +334,13 @@ class Logreg():
         data.reset_index(inplace=True)
         data = data[columns]
         data = data.set_index("Index")
+        n = len(data)
         if drop_na:
             data = data.dropna(axis=0)
+            print_log(f"Dropped {n - len(data)} lines with nan", self.verbose)
         else:
             data = self._replace_na(data)
+            print_log("Replaced nan with known trimeans", self.verbose)
         data = standardise_data(data)
 
         x: np.ndarray = np.array(data)
@@ -344,8 +356,9 @@ class Logreg():
             str_results.append(enum_by_id.get(class_index[i]))
 
         data[self.class_col] = str_results
-        print(data)
         data.to_csv("houses.csv" , sep=",", index_label="Index", columns=[self.class_col])
+        print_log(f"Results:\n{data[self.class_col]}", self.verbose)
+        print_log("Results saved in houses.csv", True)
 
     #### COMPUTATIONS
     # TODO: Move every stats calculation from class into different file?

@@ -12,12 +12,12 @@ COLORS_HOUSES = {
 }
 
 
-def print_log(msg: str, verbose: bool = True) -> None:
+def print_log(msg: str, verbose: bool = False) -> None:
     """
     Prints msg on standard output if verbose = True
     """
     if verbose:
-        print(msg)
+        print(msg + "\n")
 
 
 class Percentiles(tp.NamedTuple):
@@ -113,12 +113,12 @@ def get_data(path: Path) -> pd.DataFrame:
     return data
 
 
-def standardise_data(df: pd.DataFrame) -> pd.DataFrame:
+def standardise_data(df: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
     """Standardise the numerical columns of a DataFrame"""
     for column in df.columns:
         if df.dtypes[column] not in [float, int]:
-            print(f"Standardisation: column `{column}`",
-                  f"of type `{df.dtypes[column]}` skiped")
+            print_log(f"Standardisation: column `{column}` " +
+                  f"of type `{df.dtypes[column]}` skiped", verbose)
             continue
 
         count: int = ft_count(df[column])
@@ -126,5 +126,6 @@ def standardise_data(df: pd.DataFrame) -> pd.DataFrame:
         _, std = ft_deviation(df[column], mean, count)
 
         df.loc[:, column] = (df[column] - mean) / std
+    print_log("Data standardized", verbose)
 
     return df

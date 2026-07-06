@@ -16,7 +16,7 @@ def logreg_train(verbose: bool, data: pd.DataFrame, batch_size: int) -> None:
     class_col = "Hogwarts House"
     # print(data)
     test = Logreg(verbose=verbose)
-    test.train(data, nb_cycles=500, learning_rate=0.01, class_col=class_col, features_cols=chosen_cols, batch_size=batch_size)
+    test.train(data, nb_cycles=2000, learning_rate=0.01, class_col=class_col, features_cols=chosen_cols, batch_size=batch_size)
 
     test.save_weights()
 

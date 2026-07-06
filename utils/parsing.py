@@ -146,7 +146,7 @@ def parse_predictor_args() -> argparse.Namespace:
     )
 
     parser.add_argument(
-        "--drop-na",
+        "-dna", "--drop-na",
         action="store_true",
         help="If missing feature data, drops it instead of replacing it with known trimean"
     )
