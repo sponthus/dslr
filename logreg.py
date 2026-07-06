@@ -10,6 +10,7 @@ from pathlib import Path
 from datetime import datetime
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from utils.math import log_loss, sigmoid
 from utils.utils import standardise_data, print_log
 from describe import describe
 import matplotlib.pyplot as plt
@@ -465,16 +466,6 @@ class Logreg():
         y_pred: np.ndarray = self.sigmoid(raw_result)
         return y_pred
 
-    def log_loss(self, y: np.ndarray, y_pred: np.ndarray) -> float:
-        """
-        Loss function or log loss, for visualization
-
-        mean(-(y * log(y_pred)) + (1 - y) * log(1 - y_pred))
-        """
-        res: float = -(y * np.log(y_pred)
-                       + (1 - y) * np.log(1 - y_pred)).mean()
-        return res
-
     def compute_gradient(
             self,
             x: np.ndarray,
@@ -487,11 +478,6 @@ class Logreg():
         error_b = y_pred - y
         gradient_b = np.sum(error_b, axis=1, keepdims=True) / x.shape[0]
         return gradient_w, gradient_b
-
-    def sigmoid(self, x: np.ndarray) -> np.ndarray:
-        """Sigmoid function, turns any value to 0-1"""
-        res: np.ndarray = 1 / (1 + np.exp(-x))
-        return res
 
     def _replace_na(self, data: pd.DataFrame) -> pd.DataFrame:
         """
