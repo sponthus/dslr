@@ -14,6 +14,14 @@ def strictly_positive_int(value) -> int:
     return i_value
 
 
+def add_verbose_argument(parser: argparse.ArgumentParser, program: str) -> None:
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help=f"Prints relevant informations about the {program} process"
+    )
+
+
 class ValidateCsv(argparse.Action):
     def __call__(self,
                  parser: argparse.ArgumentParser,
@@ -51,11 +59,7 @@ def parse_describe_args() -> argparse.Namespace:
 
     add_csv_dataset_argument(parser)
 
-    parser.add_argument(
-        "-v", "--verbose",
-        action="store_true",
-        help="Prints relevant informations about the prediction process"
-    )
+    add_verbose_argument(parser, "describe")
 
     return parser.parse_args()
 
@@ -84,11 +88,7 @@ def parse_scatter_args() -> argparse.Namespace:
 
     add_csv_dataset_argument(parser)
 
-    parser.add_argument(
-        "-v", "--verbose",
-        action="store_true",
-        help="Prints relevant informations about the scatterplot process"
-    )
+    add_verbose_argument(parser, "scatterplot")
 
     return parser.parse_args()
 
@@ -101,12 +101,7 @@ def parse_hist_args() -> argparse.Namespace:
 
     add_csv_dataset_argument(parser)
 
-    parser.add_argument(
-        "-v", "--verbose",
-        action="store_true",
-        help="Prints relevant informations about the histogram process"
-    )
-
+    add_verbose_argument(parser, "histogram")
     return parser.parse_args()
 
 
@@ -125,12 +120,7 @@ def parse_logreg_train_args() -> argparse.Namespace:
         " by default uses batch GD"
     )
 
-    parser.add_argument(
-        "-v", "--verbose",
-        action="store_true",
-        help="Prints relevant informations about the training process"
-    )
-
+    add_verbose_argument(parser, "training")
     return parser.parse_args()
 
 
@@ -140,7 +130,7 @@ def parse_predictor_args() -> argparse.Namespace:
                     "logistic regression method"
     )
     add_csv_dataset_argument(parser)
-
+    
     parser.add_argument(
         "model",
         type=Path,
@@ -154,10 +144,5 @@ def parse_predictor_args() -> argparse.Namespace:
         "replacing it with known trimean"
     )
 
-    parser.add_argument(
-        "-v", "--verbose",
-        action="store_true",
-        help="Prints relevant informations about the prediction process"
-    )
-
+    add_verbose_argument(parser, "prediction")
     return parser.parse_args()
