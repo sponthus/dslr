@@ -343,7 +343,7 @@ class Logreg():
         scores = []
         size = len(training_data)
         factor = size / batch_size
-        for cycle in tqdm(range(nb_cycles)):
+        for _ in tqdm(range(nb_cycles)):
             shuffled_indices = np.random.permutation(size)
             x_shuffled = x[shuffled_indices]
             y_shuffled = y[:, shuffled_indices]
