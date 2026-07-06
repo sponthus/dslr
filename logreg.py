@@ -187,6 +187,8 @@ class Logreg():
     def is_compatible(self, data: pd.DataFrame):
         """Checks if a dataset is compatible with the class initialization
         and the class attributes validity"""
+        if data.empty:
+            raise ValueError("data is empty")
         if self.class_enum is None:
             raise ValueError("no enum stored in model")
         if self.trimeans is None:
