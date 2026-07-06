@@ -498,13 +498,3 @@ class Logreg():
         plt.title(name)
         plt.plot(data)
         plt.show()
-
-    # DEBUG
-
-    def print_all(self):
-        print(f"{self.class_enum=}")
-        print(f"{self.weights=}")
-        print(f"{self.weights.shape=}")
-        print(f"{self.biases=}")
-        print(f"{self.biases.shape=}")
-        print(f"{self.nb_classes=}, {self.nb_features=}")
