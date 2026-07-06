@@ -21,6 +21,13 @@ import matplotlib.pyplot as plt
 
 
 class Logreg():
+    """
+    Logreg class contains a Logreg logistic regression model
+
+    Model can be trained or not (check with is_initialized)
+    Train with trainer()
+    Predict from data with predictor()
+    """
 
     def __init__(
             self,
@@ -60,6 +67,7 @@ class Logreg():
         print_log("Logreg class created", self.verbose)
 
     def _check_parameters(self):
+        """Checks parameters given to the class and their compatibility"""
         # Check types
         if not isinstance(self.nb_classes, int):
             raise TypeError("Invalid nb_classes type")
@@ -109,6 +117,7 @@ class Logreg():
 
     @classmethod
     def from_file(cls, verbose: bool, model_path: Path) -> Logreg:
+        """Initializes Logreg class from .json file at `model_path`"""
         try:
             with open(model_path, 'r') as f:
                 json_str: str = f.read()
@@ -145,6 +154,7 @@ class Logreg():
         return model
 
     def __str__(self) -> str:
+        """Represents Logreg class"""
         base = "Logreg class"
         initialized: bool = self.is_init()
         if not initialized:
@@ -176,7 +186,7 @@ class Logreg():
 
     def is_compatible(self, data: pd.DataFrame):
         """Checks if a dataset is compatible with the class initialization
-        and the class attributes validity."""
+        and the class attributes validity"""
         if self.class_enum is None:
             raise ValueError("no enum stored in model")
         if self.trimeans is None:
@@ -241,6 +251,7 @@ class Logreg():
             batch_size: int,
             training_data: pd.DataFrame
             ) -> int:
+        """Checks given batch_size and adapts it to training_data if needed"""
         if batch_size > len(training_data):
             print(
                 "Warning: required batch-size is higher than training "
@@ -257,8 +268,20 @@ class Logreg():
             self,
             data: pd.DataFrame
             ) -> tuple[pd.DataFrame, pd.DataFrame]:
+        """
+        Data preprocessing
+
+        From given dataset:
+        - Filters self.features_cols and self.class_col columns
+        - Drops lines containing nan
+        - Standardises data
+        - Maps self.class_col with self.class_enum
+        - Splits data into 75% training_data and 25% validator_data
+        - Returns them
+        """
         all_cols = self.features_cols + [self.class_col]
         data = data[all_cols]
+        n = len(data)
         data = data.dropna(axis=0)
         if data.empty:
             raise ValueError("data contains nan only")
@@ -291,6 +314,7 @@ class Logreg():
             ):
         """
         Initializes and trains a Logreg model from dataset.
+
         Logreg class must not be already trained to call this function.
         """
         # Check if model already trained
@@ -349,6 +373,15 @@ class Logreg():
         print_log(f"Accuracy score={score*100:.3f}%", self.verbose)
 
     def _epoch(self, x: np.ndarray, y: np.ndarray, learning_rate: float):
+        """
+        Epoch of training
+
+        From x data:
+        - Predicts y_pred
+        - Computes gradients for weights and biases
+        - Computes logloss and accuracy score for epoch
+        - Updates weights and biases with gradient
+        """
         y_pred: np.ndarray = self.predict(x)
         gradient_w, gradient_b = self.compute_gradient(x, y_pred, y)
 
@@ -423,12 +456,17 @@ class Logreg():
         return to_update - (gradient * learning_rate)
 
     def predict(self, x: np.ndarray) -> np.ndarray:
+        """From x values, finds y_pred with sigmoid(weigts * x + biases)"""
         raw_result = self.weights.T @ x.T + self.biases
         y_pred: np.ndarray = self.sigmoid(raw_result)
         return y_pred
 
     def log_loss(self, y: np.ndarray, y_pred: np.ndarray) -> float:
-        """Loss function or log loss, for visualization"""
+        """
+        Loss function or log loss, for visualization
+
+        mean(-(y * log(y_pred)) + (1 - y) * log(1 - y_pred))
+        """
         res: float = -(y * np.log(y_pred)
                        + (1 - y) * np.log(1 - y_pred)).mean()
         return res
@@ -452,9 +490,11 @@ class Logreg():
         return res
 
     def _replace_na(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Replaces nan values with known trimean for the feature
+        """
+        Replaces nan values with known trimean for the feature
 
-        If all features have no data, the row is deleted"""
+        If all features have no data, the row is deleted
+        """
         df_copy: pd.DataFrame = data.copy()
         for index, row in data.iterrows():
             missing = 0
@@ -499,6 +539,7 @@ class Logreg():
     # TODO: Add more figure for training stats visualisation (accuracy)
 
     def plot(self, data: list, name: str):
+        """Plots given data with `name` title"""
         plt.figure()
         plt.title(name)
         plt.plot(data)
