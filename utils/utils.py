@@ -31,7 +31,8 @@ class Percentiles(tp.NamedTuple):
 
 def ft_percentiles(data: pd.Series, count: int) -> Percentiles:
     """Calculate the percentiles of a pandas Series"""
-    assert count != 0, "count can not be null"
+    if count == 0:
+        raise ValueError("count can not be null")
     sorted_data: np.ndarray = np.sort(data)
 
     min: float = sorted_data[0]
@@ -77,7 +78,8 @@ def ft_trimean(percentiles: Percentiles) -> float:
 
 def ft_mean(data: pd.Series, count: int) -> float:
     """Calculate the mean of a pandas Series"""
-    assert count != 0, "count can not be null"
+    if count == 0:
+        raise ValueError("count can not be null")
     mean: float = float("NaN")
     total: float = float(0)
 
@@ -91,7 +93,8 @@ def ft_mean(data: pd.Series, count: int) -> float:
 
 def ft_deviation(data: pd.Series, mean: float, count: int) -> tuple:
     """Calculate the variance and standard deviation of a pandas Series"""
-    assert count != 0, "count can not be null"
+    if count == 0:
+        raise ValueError("count can not be null")
     variance: float = (
         sum((x - mean) ** 2 for x in data)
         / count
