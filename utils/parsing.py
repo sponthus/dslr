@@ -121,7 +121,8 @@ def parse_logreg_train_args() -> argparse.Namespace:
         "--batch-size",
         type=strictly_positive_int,
         default=0,
-        help="Use mini-batch GD, or stochastic GD if batch-size=1, by default uses batch GD"
+        help="Use mini-batch GD, or stochastic GD if batch-size=1,"
+        " by default uses batch GD"
     )
 
     parser.add_argument(
@@ -131,6 +132,7 @@ def parse_logreg_train_args() -> argparse.Namespace:
     )
 
     return parser.parse_args()
+
 
 def parse_predictor_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -148,7 +150,8 @@ def parse_predictor_args() -> argparse.Namespace:
     parser.add_argument(
         "-dna", "--drop-na",
         action="store_true",
-        help="If missing feature data, drops it instead of replacing it with known trimean"
+        help="If missing feature data, drops it instead of "
+        "replacing it with known trimean"
     )
 
     parser.add_argument(
