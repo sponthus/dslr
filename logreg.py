@@ -342,14 +342,12 @@ class Logreg():
         validator_data = np.array(validator_data[self.features_cols])
 
         y_pred_validator = np.argmax(self.predict(validator_data), axis=0)
-        # print(f"{y_pred_validator=} / {y_validator=}\n")
         score = accuracy_score(y_true=y_validator, y_pred=y_pred_validator)
         print_log(f"Accuracy score={score*100:.3f}%", self.verbose)
 
     def _epoch(self, x: np.ndarray, y: np.ndarray, learning_rate: float):
         y_pred: np.ndarray = self.predict(x)
         gradient_w, gradient_b = self.compute_gradient(x, y_pred, y)
-        # print(f"{gradient_w=}, \n {gradient_b=}")
 
         # For graphical representations
         logloss = self.log_loss(y, y_pred)
@@ -420,11 +418,8 @@ class Logreg():
         return to_update - (gradient * learning_rate)
 
     def predict(self, x: np.ndarray) -> np.ndarray:
-        # print(f"{a.shape} - {b.shape} - {self.biases.shape}")
         raw_result = self.weights.T @ x.T + self.biases
-        # print(f"{raw_result=}")
         y_pred: np.ndarray = self.sigmoid(raw_result)
-        # print(f"{self.y_pred=}")
         return y_pred
 
     def log_loss(self, y: np.ndarray, y_pred: np.ndarray) -> float:
@@ -440,7 +435,6 @@ class Logreg():
             y: np.ndarray
             ) -> tuple[np.ndarray, np.ndarray]:
         """Uses derivative from log loss function, for gradient descent"""
-        # res = ((self.y_pred - y) * x).mean()
         error = y_pred - y
         gradient_w = (x.T @ error.T) / x.shape[0]
         error_b = y_pred - y
@@ -495,11 +489,6 @@ class Logreg():
 
         with open(model_path, 'w') as f:
             json.dump(save_dict, f, indent=4)
-
-    def load_model(self):
-        """Load a model from a file"""
-        # Use json file
-        pass
 
     # TRACK
     # TODO: Add more figure for training stats visualisation (accuracy)
