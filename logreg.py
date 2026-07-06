@@ -25,7 +25,7 @@ class Logreg():
     """
     Logreg class contains a Logreg logistic regression model
 
-    Model can be trained or not (check with is_initialized)
+    Model can be trained or not (check with is_init)
     Train with trainer()
     Predict from data with predictor()
     """
@@ -185,7 +185,7 @@ class Logreg():
             self.biases is not None,
         ])
 
-    def is_compatible(self, data: pd.DataFrame):
+    def _is_compatible(self, data: pd.DataFrame):
         """Checks if a dataset is compatible with the class initialization
         and the class attributes validity"""
         if data.empty:
@@ -219,7 +219,7 @@ class Logreg():
 
     # INITIALIZATION
 
-    def initialize(
+    def _initialize(
             self,
             data: pd.DataFrame,
             features_cols: list[str],
@@ -324,7 +324,7 @@ class Logreg():
         if self.is_init():
             raise ValueError("model is already initialized")
         else:
-            self.initialize(data, features_cols, class_col)
+            self._initialize(data, features_cols, class_col)
 
         # TODO: Evaluate if it is better to shuffle the data
         # at each cycle to avoid overfitting
@@ -361,8 +361,8 @@ class Logreg():
             scores.append(epoch_score)
 
         print_log(f"\nFinished training:\n{self}", self.verbose)
-        self.plot(losses, name="Losses through training")
-        self.plot(scores, name="Accuracy scores through training")
+        self._plot(losses, name="Losses through training")
+        self._plot(scores, name="Accuracy scores through training")
 
         y_validator = np.zeros((self.nb_classes, len(validator_data)))
         for i in range(len(validator_data)):
@@ -371,7 +371,7 @@ class Logreg():
         y_validator = np.argmax(y_validator, axis=0)
         validator_data = np.array(validator_data[self.features_cols])
 
-        y_pred_validator = np.argmax(self.predict(validator_data), axis=0)
+        y_pred_validator = np.argmax(self._predict(validator_data), axis=0)
         score = accuracy_score(y_true=y_validator, y_pred=y_pred_validator)
         print_log(f"Accuracy score={score*100:.3f}%", self.verbose)
 
@@ -385,18 +385,18 @@ class Logreg():
         - Computes logloss and accuracy score for epoch
         - Updates weights and biases with gradient
         """
-        y_pred: np.ndarray = self.predict(x)
-        gradient_w, gradient_b = self.compute_gradient(x, y_pred, y)
+        y_pred: np.ndarray = self._predict(x)
+        gradient_w, gradient_b = self._compute_gradient(x, y_pred, y)
 
         # For graphical representations
-        logloss = self.log_loss(y, y_pred)
+        logloss = log_loss(y, y_pred)
         score = accuracy_score(
             y_true=np.argmax(y, axis=0),
             y_pred=np.argmax(y_pred, axis=0)
             )
 
-        self.weights = self.update(self.weights, gradient_w, learning_rate)
-        self.biases = self.update(self.biases, gradient_b, learning_rate)
+        self.weights = self._update(self.weights, gradient_w, learning_rate)
+        self.biases = self._update(self.biases, gradient_b, learning_rate)
         return logloss, score
 
     def predictor(self, data: pd.DataFrame, drop_na: bool = True) -> None:
@@ -404,7 +404,7 @@ class Logreg():
         if not self.is_init():
             raise ValueError("model is not initialized")
 
-        if not self.is_compatible(data):
+        if not self._is_compatible(data):
             raise ValueError("model training is not compatible with data")
 
         columns = ["Index"]
@@ -427,7 +427,7 @@ class Logreg():
         data = standardise_data(data)
 
         x: np.ndarray = np.array(data)
-        y_pred = self.predict(x)
+        y_pred = self._predict(x)
 
         enum_by_id = {
             value: key for key, value in self.class_enum.items()
@@ -451,7 +451,7 @@ class Logreg():
     # COMPUTATIONS
     # TODO: Move every stats calculation from class into different file?
 
-    def update(
+    def _update(
             self,
             to_update: np.ndarray,
             gradient: np.ndarray,
@@ -460,13 +460,13 @@ class Logreg():
         """Updates weights or bias with gradient modulated by learning_rate"""
         return to_update - (gradient * learning_rate)
 
-    def predict(self, x: np.ndarray) -> np.ndarray:
+    def _predict(self, x: np.ndarray) -> np.ndarray:
         """From x values, finds y_pred with sigmoid(weigts * x + biases)"""
         raw_result = self.weights.T @ x.T + self.biases
-        y_pred: np.ndarray = self.sigmoid(raw_result)
+        y_pred: np.ndarray = sigmoid(raw_result)
         return y_pred
 
-    def compute_gradient(
+    def _compute_gradient(
             self,
             x: np.ndarray,
             y_pred: np.ndarray,
@@ -528,7 +528,7 @@ class Logreg():
     # TRACK
     # TODO: Add more figure for training stats visualisation (accuracy)
 
-    def plot(self, data: list, name: str):
+    def _plot(self, data: list, name: str):
         """Plots given data with `name` title"""
         plt.figure()
         plt.title(name)
