@@ -362,8 +362,11 @@ class Logreg():
 
     def predictor(self, data: pd.DataFrame, drop_na: bool = True) -> None:
         """Used to predict values from a trained model"""
-        assert self.is_init(), "not initialized"
-        assert self.is_compatible(data), "model training is not compatible with data"
+        if not self.is_init():
+            raise ValueError("model is not initialized")
+
+        if not self.is_compatible(data):
+            raise ValueError("model training is not compatible with data")
 
         columns = ["Index"]
         columns.extend(self.features_cols)
