@@ -162,16 +162,17 @@ class Logreg():
     # CONDITIONS
 
     def is_init(self) -> bool:
-        if self.class_enum is None \
-           or self.trimeans is None \
-           or self.nb_classes == 0 \
-           or self.nb_features == 0 \
-           or self.class_col is None \
-           or self.features_cols is None \
-           or self.weights is None \
-           or self.biases is None:
-            return False
-        return True
+        """Return True when the model appears initialized."""
+        return all([
+            self.class_enum is not None,
+            self.trimeans is not None,
+            self.nb_classes > 0,
+            self.nb_features > 0,
+            self.class_col is not None,
+            self.features_cols is not None,
+            self.weights is not None,
+            self.biases is not None,
+        ])
 
     def is_compatible(self, data: pd.DataFrame):
         """Checks if a dataset is compatible with the class initialization
