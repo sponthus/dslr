@@ -280,7 +280,7 @@ class Logreg():
             )
         return training_data, validator_data
 
-    def train(
+    def trainer(
             self,
             data: pd.DataFrame,
             nb_cycles: int,
