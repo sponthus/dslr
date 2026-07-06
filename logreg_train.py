@@ -34,7 +34,6 @@ def main():
         sys.exit(1)
     except Exception as e:
         print(f"Unexpected error: {e}")
-        raise e
         sys.exit(1)
 
 
