@@ -30,7 +30,8 @@ class Logreg():
             class_col: str | None = None,
             features_cols: list[str] | None = None,
             weights: np.ndarray | None = None,
-            biases: np.ndarray | None = None
+            biases: np.ndarray | None = None,
+            verbose: bool = False
             ):
 
         # Remove the saved dataframe?
@@ -42,6 +43,7 @@ class Logreg():
         self.features_cols: list[str] | None = features_cols
         self.weights: np.ndarray | None = weights
         self.biases: np.ndarray | None = biases
+        self.verbose = verbose
 
         arguments: list = [enum_by_name, trimeans, class_col, features_cols, weights, biases]
         # If any argument is not None, check the coherence of given parameters
@@ -95,7 +97,7 @@ class Logreg():
             raise ValueError("Invalid biases shape")
 
     @classmethod
-    def from_file(cls, model_path: Path) -> Logreg:
+    def from_file(cls, verbose: bool, model_path: Path) -> Logreg:
         try:
             with open(model_path, 'r') as f:
                 json_str:str = f.read()
@@ -124,7 +126,8 @@ class Logreg():
             data["class_col"],
             data["features_cols"],
             np.array(data["weights"]),
-            np.array(data["biases"])
+            np.array(data["biases"]),
+            verbose
         )
 
         return model

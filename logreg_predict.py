@@ -14,7 +14,7 @@ def main():
         sys.exit(1)
 
     try:
-        test: Logreg = Logreg.from_file(args.model)
+        test: Logreg = Logreg.from_file(args.verbose, args.model)
         test.predictor(args.dataset, drop_na=args.drop_na)
 
     except FileNotFoundError as fe:

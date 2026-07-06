@@ -6,7 +6,7 @@ from logreg import Logreg
 
 
 # TODO: Check if every exception is correctly catched
-def logreg_train(data: pd.DataFrame, batch_size: int) -> None:
+def logreg_train(verbose: bool, data: pd.DataFrame, batch_size: int) -> None:
     chosen_cols = [
         "Muggle Studies",
         "History of Magic", "Transfiguration",
@@ -15,7 +15,7 @@ def logreg_train(data: pd.DataFrame, batch_size: int) -> None:
         ]
     class_col = "Hogwarts House"
     # print(data)
-    test = Logreg()
+    test = Logreg(verbose=verbose)
     test.train(data, nb_cycles=500, learning_rate=0.01, class_col=class_col, features_cols=chosen_cols, batch_size=batch_size)
 
     test.save_weights()
@@ -28,7 +28,7 @@ def main():
         sys.exit(1)
 
     try:
-        logreg_train(args.dataset, args.batch_size)
+        logreg_train(args.verbose, args.dataset, args.batch_size)
     except AssertionError as e:
         print(e)
         sys.exit(1)
