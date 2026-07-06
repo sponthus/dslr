@@ -24,7 +24,7 @@ class Logreg():
 
     def __init__(
             self,
-            enum_by_name: dict[str, int] | None = None,
+            class_enum: dict[str, int] | None = None,
             trimeans: dict[str, float] | None = None,
             nb_classes: int = 0,
             nb_features: int = 0,
@@ -36,7 +36,7 @@ class Logreg():
             ):
 
         # Remove the saved dataframe?
-        self.enum_by_name: dict | None = enum_by_name
+        self.class_enum: dict | None = class_enum
         self.trimeans: dict | None = trimeans
         self.nb_classes = nb_classes
         self.nb_features = nb_features
@@ -47,7 +47,7 @@ class Logreg():
         self.verbose = verbose
 
         arguments: list = [
-            enum_by_name,
+            class_enum,
             trimeans,
             class_col,
             features_cols,
@@ -70,12 +70,12 @@ class Logreg():
         if not isinstance(self.class_col, str):
             raise TypeError("Invalid class_col type")
 
-        if not isinstance(self.enum_by_name, dict):
+        if not isinstance(self.class_enum, dict):
             raise TypeError("Invalid class_enum type")
-        if not all(isinstance(key, str) for key in self.enum_by_name.keys()):
-            raise TypeError("Invalid enum_by_name keys type")
-        if not all(isinstance(v, int) for v in self.enum_by_name.values()):
-            raise TypeError("Invalid enum_by_name values type")
+        if not all(isinstance(key, str) for key in self.class_enum.keys()):
+            raise TypeError("Invalid class_enum keys type")
+        if not all(isinstance(v, int) for v in self.class_enum.values()):
+            raise TypeError("Invalid class_enum values type")
 
         if not all(isinstance(col, str) for col in self.features_cols):
             raise TypeError("Invalid features_cols type")
@@ -92,9 +92,9 @@ class Logreg():
             raise TypeError("Invalid trimeans values type")
 
         # Check consistency
-        if not len(self.enum_by_name.keys()) == self.nb_classes:
+        if not len(self.class_enum.keys()) == self.nb_classes:
             raise ValueError(
-                "No correspondance between enum_by_name and nb_classes"
+                "No correspondance between class_enum and nb_classes"
                 )
         if not len(self.features_cols) == self.nb_features:
             raise ValueError("Invalid nb_features")
@@ -149,7 +149,7 @@ class Logreg():
         initialized: bool = self.is_init()
         if not initialized:
             return base + "\nNot initialized"
-        base += f"\n{self.enum_by_name=}"
+        base += f"\n{self.class_enum=}"
         base += f"\n{self.trimeans=}"
         base += f"\n{self.nb_classes=}"
         base += f"\n{self.nb_features=}"
@@ -161,7 +161,7 @@ class Logreg():
 
     # CONDITIONS
     def is_init(self) -> bool:
-        if self.enum_by_name is None \
+        if self.class_enum is None \
            or self.trimeans is None \
            or self.nb_classes == 0 \
            or self.nb_features == 0 \
@@ -175,7 +175,7 @@ class Logreg():
     def is_compatible(self, data: pd.DataFrame):
         """Checks if a dataset is compatible with the class initialization
         and the class attributes validity."""
-        if self.enum_by_name is None:
+        if self.class_enum is None:
             raise ValueError("no enum stored in model")
         if self.trimeans is None:
             raise ValueError("no trimeans stored in model")
@@ -188,7 +188,7 @@ class Logreg():
                 raise ValueError(
                     f"{feature} feature not stored in model trimean"
                     )
-        if not self.nb_classes == len(self.enum_by_name):
+        if not self.nb_classes == len(self.class_enum):
             raise ValueError("wrong nb_classes stored in model")
         if not self.class_col:
             raise ValueError("no class_col in model")
@@ -223,7 +223,7 @@ class Logreg():
         self.weights = np.full((self.nb_features, self.nb_classes), 0.5)
         # One bias for each class because the biases are factorized in equation
         self.biases = np.zeros((self.nb_classes, 1))
-        self.enum_by_name = {
+        self.class_enum = {
             name: i for i, name in enumerate(classes)
         }
         statistics_df = describe(data[features_cols])
@@ -261,7 +261,7 @@ class Logreg():
         if data.empty:
             raise ValueError("data contains nan only")
         data = standardise_data(data, self.verbose)
-        data[self.class_col] = data[self.class_col].map(self.enum_by_name)
+        data[self.class_col] = data[self.class_col].map(self.class_enum)
         training_data, validator_data = train_test_split(
             data,
             test_size=0.25,
@@ -387,7 +387,7 @@ class Logreg():
         y_pred = self.predict(x)
 
         enum_by_id = {
-            value: key for key, value in self.enum_by_name.items()
+            value: key for key, value in self.class_enum.items()
         }
 
         str_results = []
@@ -473,7 +473,7 @@ class Logreg():
         # Save used feature for training and enum
 
         save_dict = {
-            "class_enum": self.enum_by_name,
+            "class_enum": self.class_enum,
             "nb_classes": self.nb_classes,
             "nb_features": self.nb_features,
             "class_col": self.class_col,
@@ -511,7 +511,7 @@ class Logreg():
     # DEBUG
 
     def print_all(self):
-        print(f"{self.enum_by_name=}")
+        print(f"{self.class_enum=}")
         print(f"{self.weights=}")
         print(f"{self.weights.shape=}")
         print(f"{self.biases=}")
