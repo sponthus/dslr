@@ -15,11 +15,6 @@ from utils.utils import standardise_data, print_log
 from describe import describe
 import matplotlib.pyplot as plt
 
-# To think about: Use of a config file for:
-#   - dataset
-#   - chosen features
-#   - training parameters (cyles, learning rate)
-
 
 class Logreg():
     """

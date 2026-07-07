@@ -2,6 +2,7 @@ import pandas as pd
 import typing as tp
 import numpy as np
 
+
 class Percentiles(tp.NamedTuple):
     """A named tuple to hold the percentiles of a dataset"""
     min: float

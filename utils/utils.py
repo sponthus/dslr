@@ -1,8 +1,7 @@
 import csv
 import pandas as pd
-import typing as tp
-import numpy as np
 from pathlib import Path
+from utils.math import ft_count, ft_mean, ft_deviation
 
 COLORS_HOUSES = {
     "Slytherin": (0, 1, 0),
