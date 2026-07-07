@@ -8,7 +8,7 @@ def log_loss(y: np.ndarray, y_pred: np.ndarray) -> float:
     mean(-(y * log(y_pred)) + (1 - y) * log(1 - y_pred))
     """
     res: float = -(y * np.log(y_pred)
-                    + (1 - y) * np.log(1 - y_pred)).mean()
+                   + (1 - y) * np.log(1 - y_pred)).mean()
     return res
 
 
