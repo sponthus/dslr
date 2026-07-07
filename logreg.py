@@ -449,7 +449,6 @@ class Logreg():
         print_log("Results saved in houses.csv", True)
 
     # COMPUTATIONS
-    # TODO: Move every stats calculation from class into different file?
 
     def _update(
             self,
