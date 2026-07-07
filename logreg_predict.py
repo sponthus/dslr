@@ -1,8 +1,20 @@
 from __future__ import annotations
 import sys
 import argparse
+import pandas as pd
+from pathlib import Path
 from utils.parsing import parse_predictor_args
 from logreg import Logreg
+
+
+def logreg_predict(
+        data: pd.DataFrame,
+        model: Path,
+        verbose: bool,
+        drop_na: bool
+        ) -> None:
+    test: Logreg = Logreg.from_file(verbose, model)
+    test.predictor(data, drop_na=drop_na)
 
 
 def main():
@@ -13,9 +25,12 @@ def main():
         sys.exit(1)
 
     try:
-        test: Logreg = Logreg.from_file(args.verbose, args.model)
-        test.predictor(args.dataset, drop_na=args.drop_na)
-
+        logreg_predict(
+            data=args.dataset,
+            model=args.model,
+            verbose=args.verbose,
+            drop_na=args.drop_na
+            )
     except FileNotFoundError as fe:
         print(f"{fe.strerror}: {fe.filename}")
         sys.exit(1)
@@ -33,6 +48,7 @@ def main():
         sys.exit(1)
     except Exception as e:
         print(f"Unexpected error: {e}")
+        raise e
         sys.exit(1)
 
 
