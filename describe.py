@@ -2,7 +2,7 @@ import sys
 import pandas as pd
 from utils.parsing import parse_describe_args
 import argparse
-from utils.utils import (
+from utils.math import (
     Percentiles,
     ft_percentiles,
     ft_count,
