@@ -5,7 +5,6 @@ from utils.parsing import parse_predictor_args
 from logreg import Logreg
 
 
-# TODO: Check if every exception is correctly catched
 def main():
     try:
         args: argparse.Namespace = parse_predictor_args()

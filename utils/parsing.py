@@ -2,6 +2,7 @@ import argparse
 from pathlib import Path
 from utils.utils import get_data
 import typing as tp
+import pandas as pd
 
 
 def strictly_positive_int(value) -> int:
@@ -42,8 +43,16 @@ class ValidateCsv(argparse.Action):
         try:
             data = get_data(path)
             setattr(namespace, self.dest, data)
-        except Exception:
-            parser.error(f"Unable to read {path} as a pd.DataFrame")
+        except FileNotFoundError:
+            parser.error(f"{path} file not found")
+        except PermissionError:
+            parser.error(f"{path} is not readable")
+        except pd.errors.EmptyDataError:
+            parser.error(f"No data in {path}")
+        except pd.errors.ParserError:
+            parser.error(f"Unable to parse {path}")
+        except Exception as e:
+            parser.error(f"Error: {e}")
 
 
 def add_csv_dataset_argument(parser: argparse.ArgumentParser) -> None:

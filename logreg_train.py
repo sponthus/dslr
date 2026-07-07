@@ -5,7 +5,6 @@ from utils.parsing import parse_logreg_train_args
 from logreg import Logreg
 
 
-# TODO: Check if every exception is correctly catched
 def logreg_train(verbose: bool, data: pd.DataFrame, batch_size: int) -> None:
     chosen_cols = [
         "Muggle Studies",
@@ -35,6 +34,12 @@ def main():
 
     try:
         logreg_train(args.verbose, args.dataset, args.batch_size)
+    except ValueError as ve:
+        print(ve)
+        sys.exit(1)
+    except TypeError as te:
+        print(te)
+        sys.exit(1)
     except AssertionError as e:
         print(e)
         sys.exit(1)
