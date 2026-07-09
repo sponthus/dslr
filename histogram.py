@@ -18,7 +18,8 @@ def histogram(data: pd.DataFrame) -> None:
     graph_per_row = 5
     nb_row = nb_col // graph_per_row + (1 if nb_col % graph_per_row else 0)
     fig = plt.figure(figsize=(6 * graph_per_row, 5 * nb_row), num="Histogram")
-    fig.suptitle("Histograms by Hogwarts House for each feature", size=25, y=0.98)
+    fig.suptitle("Histograms by Hogwarts House for each feature",
+                 size=25, y=0.98)
 
     for i, col in enumerate(numeric_col):
         plt.subplot(nb_row, graph_per_row, i + 1)
@@ -34,7 +35,8 @@ def histogram(data: pd.DataFrame) -> None:
         plt.title(col, fontsize=20)
 
     fig.legend(
-        handles=[Patch(color=color, label=house) for house, color in COLORS_HOUSES.items()],
+        handles=[Patch(color=color, label=house)
+                 for house, color in COLORS_HOUSES.items()],
         loc="upper center",
         bbox_to_anchor=(0.5, 0.96),
         ncol=len(COLORS_HOUSES),
@@ -43,6 +45,7 @@ def histogram(data: pd.DataFrame) -> None:
     )
     plt.tight_layout(rect=(0, 0, 1, 0.96))
     plt.show()
+
 
 def main():
     try:

@@ -12,7 +12,7 @@ def logreg_train(verbose: bool, data: pd.DataFrame, batch_size: int) -> None:
         "History of Magic",
         "Muggle Studies",
         "Transfiguration"
-]
+    ]
     class_col = "Hogwarts House"
     test = Logreg(verbose=verbose)
     test.trainer(

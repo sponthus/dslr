@@ -8,29 +8,14 @@ from utils.utils import COLORS_HOUSES
 from utils.parsing import parse_pair_plot_args
 
 
-# chosen_cols = [
-#     "Astronomy",
-#     "Herbology",
-#     "Divination",
-#     "Muggle Studies",
-#     "Ancient Runes",
-#     "History of Magic",
-#      "Transfiguration",
-#     "Charms"
-#     ]
-# Red = "History of Magic", "Transfiguration"
-# chosen_cols = ["Muggle Studies",
-#                "History of Magic", "Transfiguration",
-#                "Divination",
-#                "Astronomy", "Herbology"
-#                ]
-
 def pair_plot(data: pd.DataFrame) -> None:
     """Plot pair plots for each numeric column in the dataset,
     grouped by Hogwarts House."""
 
     def wrap_label(label: str, width: int = 12) -> str:
-        return textwrap.fill(label, width=width, break_long_words=False, break_on_hyphens=False)
+        return textwrap.fill(label, width=width,
+                             break_long_words=False,
+                             break_on_hyphens=False)
 
     numeric_col = [
         col for col in data.columns
@@ -73,7 +58,8 @@ def pair_plot(data: pd.DataFrame) -> None:
                 plt.xlabel(col_a)
 
     fig.legend(
-        handles=[Patch(color=color, label=house) for house, color in COLORS_HOUSES.items()],
+        handles=[Patch(color=color, label=house)
+                 for house, color in COLORS_HOUSES.items()],
         loc="upper center",
         bbox_to_anchor=(0.5, 0.955),
         ncol=len(COLORS_HOUSES),
