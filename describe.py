@@ -55,13 +55,16 @@ def main():
 
     try:
         statistics_df = describe(args.dataset)
-        print(statistics_df)
     except AssertionError as e:
         print(e)
         sys.exit(1)
     except Exception as e:
         print(f"Unexpected error: describe(): {e}")
         sys.exit(1)
+
+    with pd.option_context('display.max_rows', None,
+                           'display.max_columns', None):
+        print(statistics_df)
 
 
 if __name__ == "__main__":
