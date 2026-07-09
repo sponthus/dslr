@@ -14,7 +14,10 @@ from utils.math import (
 
 def describe(data: pd.DataFrame) -> pd.DataFrame:
     """Describe the basic statistics of a pandas DataFrame"""
-    numeric_col = [col for col in data.columns if data[col].dtype == float]
+    numeric_col = [
+        col for col in data.columns
+        if pd.api.types.is_float_dtype(data[col])
+    ]
     statistics = []
     for col in numeric_col:
         col_data: pd.Series[float] = data[col].dropna()

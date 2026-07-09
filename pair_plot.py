@@ -32,7 +32,10 @@ def pair_plot(data: pd.DataFrame) -> None:
     def wrap_label(label: str, width: int = 12) -> str:
         return textwrap.fill(label, width=width, break_long_words=False, break_on_hyphens=False)
 
-    numeric_col = [col for col in data.columns if data[col].dtype == float]
+    numeric_col = [
+        col for col in data.columns
+        if pd.api.types.is_float_dtype(data[col])
+    ]
     chosen_cols = numeric_col
     nb = len(chosen_cols)
     fig = plt.figure(figsize=(nb * 2.5, nb * 1.5), num="Pair Plot")

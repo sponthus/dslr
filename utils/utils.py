@@ -40,10 +40,10 @@ def get_data(path: Path) -> pd.DataFrame:
 def standardise_data(df: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
     """Standardise the numerical columns of a DataFrame"""
     for column in df.columns:
-        if df.dtypes[column] not in [float, int]:
+        if not pd.api.types.is_numeric_dtype(df[column]):
             print_log(
                 f"Standardisation: column `{column}` " +
-                f"of type `{df.dtypes[column]}` skiped", verbose
+                f"of type `{df.dtypes[column]}` skipped", verbose
             )
             continue
 

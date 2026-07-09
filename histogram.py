@@ -10,7 +10,10 @@ from utils.parsing import parse_hist_args
 def histogram(data: pd.DataFrame) -> None:
     """Plot histograms for each numeric column in the dataset,
     grouped by Hogwarts House."""
-    numeric_col = [col for col in data.columns if data[col].dtype == float]
+    numeric_col = [
+        col for col in data.columns
+        if pd.api.types.is_float_dtype(data[col])
+    ]
     nb_col = len(numeric_col)
     graph_per_row = 5
     nb_row = nb_col // graph_per_row + (1 if nb_col % graph_per_row else 0)
