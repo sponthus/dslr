@@ -7,11 +7,12 @@ from logreg import Logreg
 
 def logreg_train(verbose: bool, data: pd.DataFrame, batch_size: int) -> None:
     chosen_cols = [
+        "Astronomy",
+        "Charms",
+        "History of Magic",
         "Muggle Studies",
-        "History of Magic", "Transfiguration",
-        "Divination",
-        "Astronomy", "Herbology"
-        ]
+        "Transfiguration"
+]
     class_col = "Hogwarts House"
     test = Logreg(verbose=verbose)
     test.trainer(
