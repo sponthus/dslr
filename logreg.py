@@ -368,7 +368,7 @@ class Logreg():
 
         y_pred_validator = np.argmax(self._predict(validator_data), axis=0)
         score = accuracy_score(y_true=y_validator, y_pred=y_pred_validator)
-        print_log(f"Accuracy score={score*100:.3f}%", self.verbose)
+        print_log(f"Accuracy score={score*100:.3f}%", True)
 
     def _epoch(self, x: np.ndarray, y: np.ndarray, learning_rate: float):
         """
