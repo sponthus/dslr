@@ -1,0 +1,2253 @@
+[
+  {
+    "features": [
+      "Astronomy",
+      "Herbology"
+    ],
+    "score": 0.9782552083333333
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination"
+    ],
+    "score": 0.7792428198433421
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies"
+    ],
+    "score": 0.7725260416666667
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Ancient Runes"
+    ],
+    "score": 0.9709635416666667
+  },
+  {
+    "features": [
+      "Astronomy",
+      "History of Magic"
+    ],
+    "score": 0.7933246073298429
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Transfiguration"
+    ],
+    "score": 0.8015625
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Charms"
+    ],
+    "score": 0.8746173469387755
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination"
+    ],
+    "score": 0.7071801566579634
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies"
+    ],
+    "score": 0.791644908616188
+  },
+  {
+    "features": [
+      "Herbology",
+      "Ancient Runes"
+    ],
+    "score": 0.9746736292428199
+  },
+  {
+    "features": [
+      "Herbology",
+      "History of Magic"
+    ],
+    "score": 0.6979002624671916
+  },
+  {
+    "features": [
+      "Herbology",
+      "Transfiguration"
+    ],
+    "score": 0.7018229166666666
+  },
+  {
+    "features": [
+      "Herbology",
+      "Charms"
+    ],
+    "score": 0.7968112244897959
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies"
+    ],
+    "score": 0.774869109947644
+  },
+  {
+    "features": [
+      "Divination",
+      "Ancient Runes"
+    ],
+    "score": 0.7833769633507853
+  },
+  {
+    "features": [
+      "Divination",
+      "History of Magic"
+    ],
+    "score": 0.6893421052631579
+  },
+  {
+    "features": [
+      "Divination",
+      "Transfiguration"
+    ],
+    "score": 0.7005235602094241
+  },
+  {
+    "features": [
+      "Divination",
+      "Charms"
+    ],
+    "score": 0.9459079283887468
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "Ancient Runes"
+    ],
+    "score": 0.7775456919060052
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "History of Magic"
+    ],
+    "score": 0.7825459317585302
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "Transfiguration"
+    ],
+    "score": 0.7875979112271541
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "Charms"
+    ],
+    "score": 0.7399234693877551
+  },
+  {
+    "features": [
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.7973753280839895
+  },
+  {
+    "features": [
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.7971279373368146
+  },
+  {
+    "features": [
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.7969387755102041
+  },
+  {
+    "features": [
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.5282152230971129
+  },
+  {
+    "features": [
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.7753846153846154
+  },
+  {
+    "features": [
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.7798469387755103
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination"
+    ],
+    "score": 0.9826666666666667
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies"
+    ],
+    "score": 0.9758666666666667
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Ancient Runes"
+    ],
+    "score": 0.9814666666666667
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "History of Magic"
+    ],
+    "score": 0.9808823529411764
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Transfiguration"
+    ],
+    "score": 0.980718085106383
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Charms"
+    ],
+    "score": 0.9798177083333334
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies"
+    ],
+    "score": 0.7835561497326203
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Ancient Runes"
+    ],
+    "score": 0.9771390374331551
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "History of Magic"
+    ],
+    "score": 0.9777479892761394
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Transfiguration"
+    ],
+    "score": 0.9855614973262032
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Charms"
+    ],
+    "score": 0.8796344647519583
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "Ancient Runes"
+    ],
+    "score": 0.9737333333333333
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "History of Magic"
+    ],
+    "score": 0.9677807486631016
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "Transfiguration"
+    ],
+    "score": 0.9676
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "Charms"
+    ],
+    "score": 0.8490885416666667
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.9771390374331551
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.9757333333333333
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.983203125
+  },
+  {
+    "features": [
+      "Astronomy",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.8025401069518716
+  },
+  {
+    "features": [
+      "Astronomy",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9753926701570681
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.97890625
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies"
+    ],
+    "score": 0.9760695187165775
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Ancient Runes"
+    ],
+    "score": 0.9779411764705882
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "History of Magic"
+    ],
+    "score": 0.7086021505376344
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Transfiguration"
+    ],
+    "score": 0.7118983957219251
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Charms"
+    ],
+    "score": 0.9783289817232376
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes"
+    ],
+    "score": 0.9696
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "History of Magic"
+    ],
+    "score": 0.9632707774798928
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "Transfiguration"
+    ],
+    "score": 0.9621333333333333
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "Charms"
+    ],
+    "score": 0.8003916449086161
+  },
+  {
+    "features": [
+      "Herbology",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.9746648793565683
+  },
+  {
+    "features": [
+      "Herbology",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.9704
+  },
+  {
+    "features": [
+      "Herbology",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.9712793733681462
+  },
+  {
+    "features": [
+      "Herbology",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.7093833780160859
+  },
+  {
+    "features": [
+      "Herbology",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.965485564304462
+  },
+  {
+    "features": [
+      "Herbology",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9686197916666667
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes"
+    ],
+    "score": 0.9585790884718498
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "History of Magic"
+    ],
+    "score": 0.9685483870967743
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "Transfiguration"
+    ],
+    "score": 0.9675133689839572
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "Charms"
+    ],
+    "score": 0.8921465968586387
+  },
+  {
+    "features": [
+      "Divination",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.980510752688172
+  },
+  {
+    "features": [
+      "Divination",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.9763368983957219
+  },
+  {
+    "features": [
+      "Divination",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.9807591623036649
+  },
+  {
+    "features": [
+      "Divination",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.7064690026954178
+  },
+  {
+    "features": [
+      "Divination",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9623684210526315
+  },
+  {
+    "features": [
+      "Divination",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9705497382198953
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.7951742627345845
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.8012
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.7996083550913838
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.7924932975871314
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.7906824146981627
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.7913838120104438
+  },
+  {
+    "features": [
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.7947721179624665
+  },
+  {
+    "features": [
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.7965879265091863
+  },
+  {
+    "features": [
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.798041775456919
+  },
+  {
+    "features": [
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.7955380577427822
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies"
+    ],
+    "score": 0.9763661202185792
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Ancient Runes"
+    ],
+    "score": 0.9807377049180328
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "History of Magic"
+    ],
+    "score": 0.9842465753424657
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Transfiguration"
+    ],
+    "score": 0.9823770491803279
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Charms"
+    ],
+    "score": 0.98
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes"
+    ],
+    "score": 0.9818801089918257
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "History of Magic"
+    ],
+    "score": 0.9799180327868853
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "Transfiguration"
+    ],
+    "score": 0.9840599455040872
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "Charms"
+    ],
+    "score": 0.9802666666666666
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.9831967213114754
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.9818801089918257
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.9816
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9770491803278688
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.982620320855615
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9820478723404256
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes"
+    ],
+    "score": 0.9752054794520548
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "History of Magic"
+    ],
+    "score": 0.9785714285714285
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "Transfiguration"
+    ],
+    "score": 0.9840163934426229
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "Charms"
+    ],
+    "score": 0.8545454545454545
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.9796703296703296
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.9829234972677595
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.9831550802139037
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9813186813186813
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9758713136729222
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9823529411764705
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.9799180327868853
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.9767029972752044
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.9832
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.96775956284153
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.979144385026738
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9836
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9780054644808743
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9802139037433155
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9834666666666667
+  },
+  {
+    "features": [
+      "Astronomy",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9800802139037433
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes"
+    ],
+    "score": 0.9812328767123287
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "History of Magic"
+    ],
+    "score": 0.9785714285714285
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Transfiguration"
+    ],
+    "score": 0.9765027322404372
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Charms"
+    ],
+    "score": 0.9786096256684492
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.9804945054945055
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.9799180327868853
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.9850267379679144
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.709366391184573
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9821236559139785
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9811497326203209
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.9664383561643836
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.9682561307901907
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.9596
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9713698630136987
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9620643431635388
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9613333333333334
+  },
+  {
+    "features": [
+      "Herbology",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9765753424657534
+  },
+  {
+    "features": [
+      "Herbology",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9738605898123325
+  },
+  {
+    "features": [
+      "Herbology",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9702666666666667
+  },
+  {
+    "features": [
+      "Herbology",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9794906166219839
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.9771349862258953
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.982876712328767
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.981367292225201
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9734159779614325
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9719086021505376
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9713903743315508
+  },
+  {
+    "features": [
+      "Divination",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.977961432506887
+  },
+  {
+    "features": [
+      "Divination",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9801075268817204
+  },
+  {
+    "features": [
+      "Divination",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9836898395721925
+  },
+  {
+    "features": [
+      "Divination",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9784366576819407
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.8015068493150685
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.7975871313672922
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.8013333333333333
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.7958445040214477
+  },
+  {
+    "features": [
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.7994638069705093
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes"
+    ],
+    "score": 0.9830532212885154
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "History of Magic"
+    ],
+    "score": 0.9821629213483146
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Transfiguration"
+    ],
+    "score": 0.9818435754189944
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Charms"
+    ],
+    "score": 0.9786885245901639
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.9820224719101124
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.9814245810055866
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.9808743169398907
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9825842696629213
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9832876712328767
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9826502732240437
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.984873949579832
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.9818941504178273
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.9840599455040872
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9851540616246498
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9846994535519126
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9836512261580381
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9818435754189945
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.980191256830601
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9809264305177112
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9814207650273223
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.9806179775280899
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.9829131652661065
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.982876712328767
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9818820224719101
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9806318681318681
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.982103825136612
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9823033707865169
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9821428571428571
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.983879781420765
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9822802197802197
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9782122905027932
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9812841530054645
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9799727520435968
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9834699453551913
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9848360655737705
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.9811267605633803
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.9831932773109243
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.9806849315068493
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.981830985915493
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9817307692307692
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9795081967213115
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9792957746478873
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9796703296703296
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9819672131147541
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.981267217630854
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9718487394957983
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9616438356164384
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9668937329700272
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9765753424657534
+  },
+  {
+    "features": [
+      "Herbology",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9747945205479452
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9811267605633803
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9818181818181818
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9831506849315068
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9763085399449036
+  },
+  {
+    "features": [
+      "Divination",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9818181818181818
+  },
+  {
+    "features": [
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.799041095890411
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic"
+    ],
+    "score": 0.9823275862068965
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration"
+    ],
+    "score": 0.980945558739255
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Charms"
+    ],
+    "score": 0.9830532212885154
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.980028735632184
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9830056179775281
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9844972067039106
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9801724137931035
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9821629213483146
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9824022346368715
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9825842696629213
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9822349570200574
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9830532212885155
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9842618384401114
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9833333333333333
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9829608938547486
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9834770114942529
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9835674157303371
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9817927170868347
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9821629213483146
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9811797752808988
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9801675977653631
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9821325648414986
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9814084507042253
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.980672268907563
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9823943661971831
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.979718309859155
+  },
+  {
+    "features": [
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9669467787114846
+  },
+  {
+    "features": [
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9826760563380282
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration"
+    ],
+    "score": 0.9808823529411764
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Charms"
+    ],
+    "score": 0.9817528735632184
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9826647564469915
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9801724137931035
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9808908045977012
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9840974212034385
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9833333333333334
+  },
+  {
+    "features": [
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9853025936599423
+  },
+  {
+    "features": [
+      "Astronomy",
+      "Herbology",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Charms"
+    ],
+    "score": 0.9833823529411765
+  }
+]
