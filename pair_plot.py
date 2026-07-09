@@ -1,7 +1,9 @@
 import sys
 import argparse
+import textwrap
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 from utils.utils import COLORS_HOUSES
 from utils.parsing import parse_pair_plot_args
 
@@ -26,13 +28,17 @@ from utils.parsing import parse_pair_plot_args
 def pair_plot(data: pd.DataFrame) -> None:
     """Plot pair plots for each numeric column in the dataset,
     grouped by Hogwarts House."""
+
+    def wrap_label(label: str, width: int = 12) -> str:
+        return textwrap.fill(label, width=width, break_long_words=False, break_on_hyphens=False)
+
     numeric_col = [col for col in data.columns if data[col].dtype == float]
     chosen_cols = numeric_col
     nb = len(chosen_cols)
-    plt.figure(figsize=(nb * 3, nb * 2), num="Pair Plot")
+    fig = plt.figure(figsize=(nb * 2.5, nb * 1.5), num="Pair Plot")
 
     i = 1
-    plt.suptitle("Features pair plot", size=50)
+    fig.suptitle("Features pair plot", size=25, y=0.98)
     for b, col_b in enumerate(chosen_cols):
         for a, col_a in enumerate(chosen_cols):
             plt.subplot(nb, nb, i)
@@ -59,12 +65,19 @@ def pair_plot(data: pd.DataFrame) -> None:
                         s=4
                     )
             if a == 0:
-                plt.ylabel(col_b)
+                plt.ylabel(wrap_label(col_b), rotation=45, labelpad=20)
             if b == nb - 1:
                 plt.xlabel(col_a)
 
-    plt.tight_layout(rect=(0, 0, 1, 0.98))
-    plt.legend()
+    fig.legend(
+        handles=[Patch(color=color, label=house) for house, color in COLORS_HOUSES.items()],
+        loc="upper center",
+        bbox_to_anchor=(0.5, 0.955),
+        ncol=len(COLORS_HOUSES),
+        frameon=False,
+        fontsize=12
+    )
+    plt.tight_layout(rect=(0, 0, 1, 0.95))
     plt.show()
 
 
