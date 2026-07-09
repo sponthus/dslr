@@ -17,7 +17,8 @@ def scatter_plot(data: pd.DataFrame, feature_a: str, feature_b: str) -> None:
     if feature_b not in data.columns:
         raise AssertionError(f"'{feature_b}' not in data")
 
-    plt.figure()
+    plt.figure(num="Scatter Plot", figsize=(10, 6))
+    plt.title(f"{feature_a} and {feature_b} similarities", fontsize=16)
     for house, color in COLORS_HOUSES.items():
         color_w_transparency = *color, 0.5
         filtered_data = data[data["Hogwarts House"] == house]
@@ -26,12 +27,11 @@ def scatter_plot(data: pd.DataFrame, feature_a: str, feature_b: str) -> None:
             x=filtered_data[feature_a],
             y=filtered_data[feature_b],
             fc=color_w_transparency,
-            s=4
+            s=8
         )
-    plt.xlabel(feature_a)
-    plt.ylabel(feature_b)
-    plt.legend()
-    plt.title(f"{feature_a} and {feature_b} similarities")
+    plt.xlabel(feature_a, fontsize=16)
+    plt.ylabel(feature_b, fontsize=16)
+    plt.legend(fontsize=14, markerscale=6)
     plt.show()
 
 
@@ -39,7 +39,7 @@ def main():
     try:
         args: argparse.Namespace = parse_scatter_args()
     except Exception as e:
-        print(f"Unexpected error: parse_pair_plot_args(): {e}")
+        print(f"Unexpected error: parse_scatter_args(): {e}")
         sys.exit(1)
 
     try:
@@ -50,7 +50,7 @@ def main():
         print(e)
         sys.exit(1)
     except Exception as e:
-        print(f"Unexpected error: pair_plot(): {e}")
+        print(f"Unexpected error: scatter_plot(): {e}")
         sys.exit(1)
 
 
