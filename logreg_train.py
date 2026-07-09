@@ -30,7 +30,7 @@ def main():
     try:
         args: argparse.Namespace = parse_logreg_train_args()
     except Exception as e:
-        print(f"Unexpected error: parse_describe_args(): {e}")
+        print(f"Unexpected error: parse_logreg_train_args(): {e}")
         sys.exit(1)
 
     try:

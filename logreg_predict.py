@@ -21,7 +21,7 @@ def main():
     try:
         args: argparse.Namespace = parse_predictor_args()
     except Exception as e:
-        print(f"Unexpected error: parse_describe_args(): {e}")
+        print(f"Unexpected error: parse_predictor_args(): {e}")
         sys.exit(1)
 
     try:
@@ -48,7 +48,6 @@ def main():
         sys.exit(1)
     except Exception as e:
         print(f"Unexpected error: {e}")
-        raise e
         sys.exit(1)
 
 
