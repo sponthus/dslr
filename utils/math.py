@@ -27,8 +27,8 @@ def ft_percentiles(data: pd.Series, count: int) -> Percentiles:
         quartile_75 = float(sorted_data[round(count * 3 / 4) - 1])
     else:
         quartile_25 = float(sorted_data[round((count + 1) * 1 / 4) - 1])
-        quartile_50 = float(sorted_data[round((count + 1) * 1 / 4) - 1])
-        quartile_75 = float(sorted_data[round((count + 1) * 1 / 4) - 1])
+        quartile_50 = float(sorted_data[round((count + 1) * 1 / 2) - 1])
+        quartile_75 = float(sorted_data[round((count + 1) * 3 / 4) - 1])
 
     percentiles = Percentiles(
         min=min,
