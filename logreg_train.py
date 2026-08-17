@@ -41,9 +41,6 @@ def main():
     except TypeError as te:
         print(te)
         sys.exit(1)
-    except AssertionError as e:
-        print(e)
-        sys.exit(1)
     except Exception as e:
         print(f"Unexpected error: {e}")
         sys.exit(1)

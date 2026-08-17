@@ -79,9 +79,6 @@ def main():
 
     try:
         pair_plot(args.dataset)
-    except AssertionError as e:
-        print(e)
-        sys.exit(1)
     except Exception as e:
         print(f"Unexpected error: pair_plot(): {e}")
         sys.exit(1)

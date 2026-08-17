@@ -58,8 +58,8 @@ def main():
 
     try:
         statistics_df = describe(args.dataset)
-    except AssertionError as e:
-        print(e)
+    except ValueError as va:
+        print(va)
         sys.exit(1)
     except Exception as e:
         print(f"Unexpected error: describe(): {e}")
