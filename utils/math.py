@@ -12,6 +12,19 @@ class Percentiles(tp.NamedTuple):
     max: float
 
 
+def linear_quantile(data: pd.Series, count: int, q: float) -> float:
+    """Computes the linear quantile of a Pandas series."""
+    position = q * (count - 1)
+    floor = int(np.floor(position))
+    ceilling = int(np.ceil(position))
+
+    fraction = position - floor
+
+    result = float(data[floor] + (data[ceilling] - data[floor]) * fraction)
+
+    return result
+
+
 def ft_percentiles(data: pd.Series, count: int) -> Percentiles:
     """Calculate the percentiles of a pandas Series"""
     if count == 0:
@@ -21,20 +34,11 @@ def ft_percentiles(data: pd.Series, count: int) -> Percentiles:
     min: float = sorted_data[0]
     max: float = sorted_data[-1]
 
-    if count % 2 == 0:
-        quartile_25 = float(sorted_data[round(count * 1 / 4) - 1])
-        quartile_50 = float(sorted_data[round(count * 1 / 2) - 1])
-        quartile_75 = float(sorted_data[round(count * 3 / 4) - 1])
-    else:
-        quartile_25 = float(sorted_data[round((count + 1) * 1 / 4) - 1])
-        quartile_50 = float(sorted_data[round((count + 1) * 1 / 2) - 1])
-        quartile_75 = float(sorted_data[round((count + 1) * 3 / 4) - 1])
-
     percentiles = Percentiles(
         min=min,
-        quartile_25=quartile_25,
-        quartile_50=quartile_50,
-        quartile_75=quartile_75,
+        quartile_25=linear_quantile(sorted_data, count, 0.25),
+        quartile_50=linear_quantile(sorted_data, count, 0.50),
+        quartile_75=linear_quantile(sorted_data, count, 0.75),
         max=max
     )
     return percentiles
@@ -80,7 +84,7 @@ def ft_deviation(data: pd.Series, mean: float, count: int) -> tuple:
         raise ValueError("count can not be null")
     variance: float = (
         sum((x - mean) ** 2 for x in data)
-        / count
+        / (count - 1)
     )
     std: float = variance ** 0.5
     return variance, std
